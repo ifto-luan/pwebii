@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sale Details</title>
+</head>
+<body>
+<h1>sale Details</h1>
+
+<div>
+    <p><strong>ID:</strong> <span th:text="${sale.id}"></span></p>
+    <p><strong>Date:</strong> <span th:text="${sale.date}"></span></p>
+    <p><strong>Client Id:</strong> <span th:text="${sale.client.id}"></span></p>
+    <p><strong>Client Name:</strong> <span th:text="${sale.client.name}"></span></p>
+    <p><strong>Total Value:</strong> $<span th:text="${sale.total}"></span></p>
+</div>
+
+<h2>Products in this sale</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${sale.items}">
+        <td th:text="${item.product.id}"></td>
+        <td th:text="${item.product.description}"></td>
+        <td th:text="${item.product.price}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td th:text="${item.total()}"></td>
+    </tr>
+    </tbody>
+</table>
+    <br>
+    <a th:href="@{/sale}">Back to Sales List</a>
+</body>
+</html>

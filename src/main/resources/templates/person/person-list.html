@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients List</title>
+</head>
+<body>
+    <header>
+        <h1>Clients List</h1>
+        <a th:href="@{/person/form}"></a>
+    </header>
+
+<a th:href="@{/natural-person/new}">New Natural Person</a>
+<a th:href="@{/juridical-person/new}">New Juridical Person</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>CPF/CNPJ</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="person : ${people}">
+        <td th:text="${person.id}"></td>
+        <td th:if="${person.isNaturalPerson}" th:text="N"></td>
+        <td th:if="${person.isJuridicalPerson}" th:text="J"></td>
+        <td th:text="${person.name}"></td>
+        <td th:if="${person.isNaturalPerson}" th:text="${person.cpf}"></td>
+        <td th:if="${person.isJuridicalPerson}" th:text="${person.cnpj}"></td>
+        <td><a th:href="@{/person/{id}(id = ${person.id})}">Edit</a> | <a th:href="@{/person/delete/{id}(id = ${person.id})}">Delete</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
