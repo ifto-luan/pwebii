@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      th:fragment="base-layout(main)">
+
+    <head th:replace="~{layout/head}"></head>
+
+    <body class="d-flex flex-column min-vh-100">
+        <header th:replace="~{layout/header :: header}"></header>
+
+        <main th:replace="${main}"></main>
+
+        <footer th:replace="~{layout/footer :: footer}"></footer>
+    </body>
+</html>

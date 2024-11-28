@@ -1,29 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sales List</title>
-</head>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
 <body>
-<h1>Sales List</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Client</th>
-        <th>Date</th>
-        <th>Total Value</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="sale : ${sales}">
-        <td th:text="${sale.id}"></td>
-        <td th:text="${sale.client.name}"></td>
-        <td th:text="${sale.date}"></td>
-        <td th:text="${sale.total}"></td>
-        <td><a th:href="@{/sale/{id}(id = ${sale.id})}">Details</a></td>
-    </tr>
-    </tbody>
-</table>
+    <main>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Date</th>
+                    <th>Total Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="sale : ${sales}">
+                    <td th:text="${sale.id}"></td>
+                    <td th:text="${sale.client.name}"></td>
+                    <td th:text="${sale.date}"></td>
+                    <td th:text="${sale.total}"></td>
+                    <td><a th:href="@{/sale/{id}(id = ${sale.id})}">Details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
 </body>
+
 </html>
