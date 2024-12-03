@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -13,8 +15,8 @@ public class Product implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
     private BigDecimal price;

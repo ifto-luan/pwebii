@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<body>
+    <main>
+        <form th:action="@{/product/search}" method="get">
+            <input type="text" th:value="${searchTerm}" name="description" placeholder="Enter product name" />
+            <button type="submit">Search</button>
+        </form>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td><a th:href="@{/product/{id}(id = ${product.id})}">Edit</a> | <a
+                            th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

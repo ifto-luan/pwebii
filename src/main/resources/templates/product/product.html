@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Client</title>
+</head>
+
+<body>
+    <main>
+        <form th:action="@{/product/save}"
+        th:object="${product}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <label for="name">Description</label>
+            <input type="text" th:field="*{description}" placeholder="Description">
+            <label for="price">Price</label>
+            <input type="text" th:field="*{price}" placeholder="Name">
+            <input type="submit" value="Submit">
+        </form>
+    </main>
+</body>
+</html>

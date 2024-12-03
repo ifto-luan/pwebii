@@ -26,7 +26,6 @@ public class Sale implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
-    private BigDecimal total;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -59,14 +58,6 @@ public class Sale implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
     }
 
     public List<SaleItem> getItems() {
