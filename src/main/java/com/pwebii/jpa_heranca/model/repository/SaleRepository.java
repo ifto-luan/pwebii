@@ -16,7 +16,7 @@ public interface SaleRepository extends JpaRepository <Sale, Long>{
 
     List<Sale> findByDate(LocalDate date);
 
-    @Query("SELECT s FROM Sale s WHERE s.id = (SELECT p.id FROM Person p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :client_name, '%')))")
-    List<Sale> findByClientName(@Param("client_name") String client_name);
+    @Query("SELECT s FROM Sale s WHERE s.client.id = :id")
+    List<Sale> findByClientId(@Param("id") Long id);
 
 }

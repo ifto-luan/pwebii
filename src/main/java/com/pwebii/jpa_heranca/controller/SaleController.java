@@ -2,6 +2,7 @@ package com.pwebii.jpa_heranca.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -38,7 +39,7 @@ public class SaleController {
     }
 
     @GetMapping("/search")
-    public ModelAndView findByDate(@RequestParam(name = "date", required = false) String date, @RequestParam(name = "client_name", required = false) String client_name, ModelMap model) {
+    public ModelAndView findByDate(@RequestParam(name = "date", required = false) String date, ModelMap model) {
 
         List<Sale> sales;
 
@@ -59,26 +60,23 @@ public class SaleController {
 
     }
 
-    @GetMapping("/search")
-    public ModelAndView findByClientName(@RequestParam(name = "client_name", required = false) String client_name, ModelMap model) {
+    @GetMapping("/client_sales/{id}")
+    public ModelAndView findByClientName(@PathVariable("id") Long id, ModelMap model) {
 
         List<Sale> sales;
 
-        if (client_name != null && !client_name.isEmpty()) {
+        if (id != null) {
 
-            sales = repo.findByClientName(client_name);
-
+            sales = repo.findByClientId(id);
+            
         } else {
-
-            sales = repo.findAll();
-
+            
+            sales = new ArrayList<>();
+            
         }
-
+        
         model.addAttribute("sales", sales);
-
         return new ModelAndView("sale/sale-list");
 
     }
-    
-
 }
