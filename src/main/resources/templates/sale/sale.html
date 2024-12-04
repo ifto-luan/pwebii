@@ -9,7 +9,7 @@
             <p><strong>Date:</strong> <span th:text="${sale.date}"></span></p>
             <p><strong>Client Id:</strong> <span th:text="${sale.client.id}"></span></p>
             <p><strong>Client Name:</strong> <span th:text="${sale.client.name}"></span></p>
-            <p><strong>Total Value:</strong> $<span th:text="${sale.total}"></span></p>
+            <p><strong>Total Value:</strong> $<span th:text="${sale.calculateTotal}"></span></p>
         </div>
 
         <h2>Products in this sale</h2>
