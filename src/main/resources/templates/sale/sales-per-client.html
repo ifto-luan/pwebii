@@ -3,17 +3,11 @@
 
 <body>
     <main>
-
-        <form th:action="@{/sale/search}" method="get">
-            <input type="date" th:value="${searchDate}" name="date" placeholder="Enter sale date" />
-            <button type="submit">Search</button>
-        </form>
-
+        <h3 th:text="${clientName}"></h3>
         <table border="1">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Client</th>
                     <th>Date</th>
                     <th>Total Value</th>
                 </tr>
@@ -21,7 +15,6 @@
             <tbody>
                 <tr th:each="sale : ${sales}">
                     <td th:text="${sale.id}"></td>
-                    <td th:text="${sale.client.name}"></td>
                     <td th:text="${sale.date}"></td>
                     <td th:text="${sale.calculateTotal}"></td>
                     <td><a th:href="@{/sale/{id}(id = ${sale.id})}">Details</a></td>

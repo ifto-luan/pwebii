@@ -29,7 +29,7 @@
                     <td th:if="${person.isJuridicalPerson}" th:text="${person.cnpj}"></td>
                     <td><a th:href="@{/person/{id}(id = ${person.id})}"> Edit </a>|
                         <a th:href="@{/person/delete/{id}(id = ${person.id})}"> Delete </a>|
-                        <a th:href="@{/sale/client_sales/{id}(id = ${person.id})}"> List all sells </a>
+                        <a th:href="@{/sale/client_sales/{id}(id = ${person.id})}"> List all sales </a>
                     </td>
                 </tr>
             </tbody>
