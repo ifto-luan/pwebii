@@ -45,7 +45,9 @@ public class SaleController {
 
         if (date != null && !date.isEmpty()) {
 
-            sales = repo.findByDate(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            System.out.println(date);
+
+            sales = repo.findByDate(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
         } else {
 

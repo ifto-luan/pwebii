@@ -5,7 +5,7 @@
     <main>
 
         <form th:action="@{/sale/search}" method="get">
-            <input type="text" th:value="${searchDate}" name="date" placeholder="Enter sale date" />
+            <input type="date" th:value="${searchDate}" name="date" placeholder="Enter sale date" />
             <button type="submit">Search</button>
         </form>
 
