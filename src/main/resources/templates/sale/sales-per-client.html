@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<body>
+    <main>
+        <h3 th:text="${clientName}"></h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Total Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="sale : ${sales}">
+                    <td th:text="${sale.id}"></td>
+                    <td th:text="${sale.date}"></td>
+                    <td th:text="${sale.calculateTotal}"></td>
+                    <td><a th:href="@{/sale/{id}(id = ${sale.id})}">Details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

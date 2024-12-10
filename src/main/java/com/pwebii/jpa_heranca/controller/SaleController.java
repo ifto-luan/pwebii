@@ -63,13 +63,14 @@ public class SaleController {
     }
 
     @GetMapping("/client_sales/{id}")
-    public ModelAndView findByClientName(@PathVariable("id") Long id, ModelMap model) {
+    public ModelAndView listSalesByClientId(@PathVariable("id") Long id, ModelMap model) {
 
         List<Sale> sales;
 
         if (id != null) {
 
             sales = repo.findByClientId(id);
+            model.addAttribute("clientName", sales.get(0).getClient().getName());
             
         } else {
             
@@ -78,7 +79,8 @@ public class SaleController {
         }
         
         model.addAttribute("sales", sales);
-        return new ModelAndView("sale/sale-list");
+        
+        return new ModelAndView("sale/sales-per-client");
 
     }
 }
