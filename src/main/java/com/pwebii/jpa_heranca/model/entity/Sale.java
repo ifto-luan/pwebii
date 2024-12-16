@@ -41,10 +41,11 @@ public class Sale implements Serializable {
     }
 
     public void addItem(Product p, double quantity) {
+
         for (SaleItem item : items) {
             
             if (item.getProduct().getId().equals(p.getId())) {
-                item.setQuantity(item.getQuantity() + quantity);
+                updateItemQuantity(p.getId(), quantity);
                 return;
             }
             
@@ -57,9 +58,17 @@ public class Sale implements Serializable {
     }
 
     public void updateItemQuantity(Long productId, double quantity) {
-        items.stream()
+        
+        SaleItem item = items.stream()
             .filter(x -> x.getProduct().getId().equals(productId))
-            .forEach(x -> x.setQuantity(x.getQuantity() + quantity));
+            .findFirst()
+            .orElse(null);
+
+        if (item != null) {
+
+            item.setQuantity(item.getQuantity() + quantity);
+
+        }
 
     }
     
