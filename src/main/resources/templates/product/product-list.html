@@ -18,14 +18,15 @@
             </thead>
             <tbody>
                 <tr th:each="product : ${products}">
-                    <td th:text="${product.id}"></td>
-                    <td th:text="${product.description}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td><a th:href="@{/product/{id}(id = ${product.id})}">Edit</a> | <a
-                            th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td>
-                </tr>
-            </tbody>
-        </table>
+                        <td th:text="${product.id}"></td>
+                        <td th:text="${product.description}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td><a th:href="@{/cart/add/{id}(id = ${product.id})}">Add to Cart</a>
+                        <!-- <td><a th:href="@{/product/{id}(id = ${product.id})}">Edit</a> | <a
+                            th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td> -->
+                    </tr>
+                </tbody>
+            </table>
     </main>
 </body>
 
