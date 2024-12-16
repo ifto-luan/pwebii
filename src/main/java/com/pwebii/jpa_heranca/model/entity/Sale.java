@@ -40,6 +40,37 @@ public class Sale implements Serializable {
         return items.stream().map(SaleItem::total).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    public void addItem(Product p, double quantity) {
+        for (SaleItem item : items) {
+            
+            if (item.getProduct().getId().equals(p.getId())) {
+                item.setQuantity(item.getQuantity() + quantity);
+                return;
+            }
+            
+        }
+        
+        SaleItem item = new SaleItem();
+        item.setProduct(p);
+        item.setQuantity(quantity);
+        this.items.add(item);
+    }
+
+    public void updateItemQuantity(Long productId, double quantity) {
+        items.stream()
+            .filter(x -> x.getProduct().getId().equals(productId))
+            .forEach(x -> x.setQuantity(x.getQuantity() + quantity));
+
+    }
+    
+    public void removeItem(Long productId) {
+        items.removeIf(x -> x.getProduct().getId().equals(productId));
+    }
+
+    public void clear() {
+        items.clear();
+    }
+
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
