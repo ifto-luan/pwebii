@@ -45,7 +45,7 @@ public class Sale implements Serializable {
         for (SaleItem item : items) {
             
             if (item.getProduct().getId().equals(p.getId())) {
-                updateItemQuantity(p.getId(), quantity);
+                item.setQuantity(item.getQuantity() + quantity);
                 return;
             }
             
@@ -56,24 +56,29 @@ public class Sale implements Serializable {
         item.setQuantity(quantity);
         this.items.add(item);
     }
-
-    public void updateItemQuantity(Long productId, double quantity) {
-        
-        SaleItem item = items.stream()
-            .filter(x -> x.getProduct().getId().equals(productId))
-            .findFirst()
-            .orElse(null);
-
-        if (item != null) {
-
-            item.setQuantity(item.getQuantity() + quantity);
-
-        }
-
-    }
     
     public void removeItem(Long productId) {
         items.removeIf(x -> x.getProduct().getId().equals(productId));
+    }
+
+    public void removeItem(Long productId, double quantity) {
+
+        for (SaleItem item : items) {
+            
+            if (item.getProduct().getId().equals(productId)) {
+
+                if (item.getQuantity() <= quantity) {
+
+                    removeItem(productId);
+                    return;
+
+                }
+
+                item.setQuantity(item.getQuantity() - quantity);
+                return;
+            }
+            
+        }
     }
 
     public void clear() {

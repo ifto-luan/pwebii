@@ -9,11 +9,13 @@
             <p><strong>Date:</strong> <span th:text="${session.sale.date}"></span></p>
             <p><strong>Client Id:</strong> <span th:text="${session.sale.client.id}"></span></p>
             <p><strong>Client Name:</strong> <span th:text="${session.sale.client.name}"></span></p> -->
-            <p><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></p>
+            <!-- <p><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></p> -->
         </div>
 
-        <h2>Products in this sale</h2>
-        <table>
+        <!-- <h2>Products in this sale</h2> -->
+        <h2>Your cart</h2>
+        <hr>
+        <table class="container">
             <thead>
                 <tr>
                     <!-- <th>ID</th> -->
@@ -31,12 +33,17 @@
                     <td th:text="${item.product.price}"></td>
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.total()}"></td>
-                    <td>+ - delete</td>
+                    <td><a th:href="@{/cart/add/{id}(id = ${item.product.id})}">+</a> |
+                        <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}">-</a> |
+                        <a th:href="@{/cart/delete/{id}(id = ${item.product.id})}">delete</a>
                 </tr>
             </tbody>
         </table>
         <br>
-        <a>Clear cart</a>
+        <p><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></p>
+        <br>
+        <hr>
+        <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/clear}">Clear cart</a>
         <br>
         <a th:href="@{/product}">Back to Product List</a>
     </main>

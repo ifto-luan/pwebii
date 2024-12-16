@@ -8,9 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,16 +41,23 @@ public class CartController {
         return new ModelAndView("redirect:/cart");
     }
 
-    @PostMapping("/remove")
-    public String removeFromCart(@ModelAttribute("sale") Sale cart, @RequestParam Long productId) {
-        cart.removeItem(productId);
-        return "redirect:/cart";
+    @GetMapping("/remove/{id}")
+    public ModelAndView removeFromCart(@ModelAttribute("sale") Sale cart, @PathVariable("id") Long productId) {
+        cart.removeItem(productId, 1);
+        return new ModelAndView("redirect:/cart");
     }
 
-    @PostMapping("/clear")
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteFromCart(@ModelAttribute("sale") Sale cart, @PathVariable("id") Long productId) {
+        cart.removeItem(productId);
+        return new ModelAndView("redirect:/cart");
+    }
+
+    @GetMapping("/clear")
     public String clearCart(@ModelAttribute("sale") Sale cart) {
         cart.clear();
-        return "redirect:/cart";
+        return "redirect:/product";
     }
 
 }
