@@ -28,6 +28,9 @@ INSERT INTO natural_person (person_id, cpf) VALUES (9, '54321098765');
 INSERT INTO person (name) VALUES ('Fashion Brand Ltda.');
 INSERT INTO juridical_person (person_id, cnpj) VALUES (10, '67890123456789');
 
+INSERT INTO person (name) VALUES ('Consumer');
+INSERT INTO natural_person (person_id, cpf) VALUES (11, '0');
+
 INSERT INTO Product (description, price) VALUES ('The Old Man and the Sea', 10.00);
 INSERT INTO Product (description, price) VALUES ('Of Mice and Men', 15.50);
 INSERT INTO Product (description, price) VALUES ('Moby Dick', 7.25);
@@ -39,8 +42,8 @@ INSERT INTO Product (description, price) VALUES ('Brave New World', 13.40);
 INSERT INTO Product (description, price) VALUES ('The Great Gatsby', 10.50);
 INSERT INTO Product (description, price) VALUES ('War and Peace', 20.00);
 
-INSERT INTO sale (client_id, date) VALUES (1, '2024-10-01');      
 INSERT INTO sale (client_id, date) VALUES (2, '2024-10-05');    
+INSERT INTO sale (client_id, date) VALUES (1, '2024-10-01');      
 INSERT INTO sale (client_id, date) VALUES (3, '2024-10-10');   
 INSERT INTO sale (client_id, date) VALUES (1, '2024-10-12');  
 INSERT INTO sale (client_id, date) VALUES (1, '2024-10-15');   

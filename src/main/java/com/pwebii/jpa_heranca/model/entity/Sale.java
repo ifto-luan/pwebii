@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +20,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@Component
+@Scope("session")
 public class Sale implements Serializable {
 
     @Serial
@@ -31,7 +36,7 @@ public class Sale implements Serializable {
     @JoinColumn(name = "client_id")
     private Person client;
 
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL , orphanRemoval = true)
     private List<SaleItem> items = new ArrayList<>();
 
     public Sale() { }
@@ -54,6 +59,7 @@ public class Sale implements Serializable {
         SaleItem item = new SaleItem();
         item.setProduct(p);
         item.setQuantity(quantity);
+        item.setSale(this);
         this.items.add(item);
     }
     
@@ -119,6 +125,11 @@ public class Sale implements Serializable {
 
     public void setClient(Person client) {
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Sale [id=" + id + ", date=" + date + ", client=" + client + ", items=" + items + "]";
     }
 
     

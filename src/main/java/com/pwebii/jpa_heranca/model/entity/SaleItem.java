@@ -71,5 +71,12 @@ public class SaleItem implements Serializable {
     public void setSale(Sale sale) {
         this.sale = sale;
     }
+
+    @Override
+    public String toString() {
+        return "SaleItem [id=" + id + ", product=" + product + ", quantity=" + quantity + ", total=" + total() +"]";
+    }
+
+    
     
 }
