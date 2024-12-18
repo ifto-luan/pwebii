@@ -2,17 +2,17 @@
 <html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
-    <main>
-        <h2>Your cart</h2>
+    <main class="container">
+        <h2 style="font-weight: bold;">Your cart</h2>
         <hr>
-        <table class="container">
+        <table class="table table-hover table-borderless">
             <thead>
                 <tr>
                     <th>Description</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
-                    <th>Actions</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -21,21 +21,30 @@
                     <td th:text="${item.product.price}"></td>
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.total()}"></td>
-                    <td><a th:href="@{/cart/add/{id}(id = ${item.product.id})}">+</a> |
-                        <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}">-</a> |
-                        <a th:href="@{/cart/delete/{id}(id = ${item.product.id})}">delete</a>
+                    <td>
+                        <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                            <a th:href="@{/cart/add/{id}(id = ${item.product.id})}" class="btn btn-primary"><strong>+</strong></a>
+                            <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}" class="btn btn-primary"><strong>-</strong></a>
+                            <a th:href="@{/cart/delete/{id}(id = ${item.product.id})}" class="btn btn-danger">delete</a>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
         <br>
-        <h3><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></h3>
-        <br>
-        <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/finish}">Finish sale</a>
-        <br>
+        <div class="d-flex justify-content-between">
+            <h3><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></h3>
+            <div>
+                <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/clear}" class="btn btn-secondary">Clear
+                    cart</a>
+                <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/finish}" class="btn btn-success">Finish
+                    sale</a>
+            </div>
+        </div>
         <hr>
-        <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/clear}">Clear cart</a>
-        <br>
-        <a th:href="@{/product}">Back to Product List</a>
+        <div class="container">
+            <a th:href="@{/product}" class="btn btn-info">Back to Product List</a>
+        </div>
     </main>
 </body>
 

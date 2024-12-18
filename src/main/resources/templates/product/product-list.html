@@ -2,31 +2,35 @@
 <html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
-    <main>
+    <main class="container">
         <form th:action="@{/product/search}" method="get">
-            <input type="text" th:value="${searchTerm}" name="description" placeholder="Enter product name" />
-            <button type="submit">Search</button>
+            <div class="input-group mb-3">
+                <!-- <label for="description">Product description</label> -->
+                <input class="form-control" type="text" th:value="${searchTerm}" name="description" placeholder="Enter product description" />
+                <button type="submit" class="btn btn-outline-secondary">Search</button>
+            </div>
         </form>
 
-        <table border="1" class="container">
+        <table border="1" class="table table-hover table-borderless">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Description</th>
                     <th>Price</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="product : ${products}">
-                        <td th:text="${product.id}"></td>
-                        <td th:text="${product.description}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td><a th:href="@{/cart/add/{id}(id = ${product.id})}">Add to Cart</a>
+                    <!-- <td th:text="${product.id}"></td> -->
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td><a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary">Add to Cart</a>
                         <!-- <td><a th:href="@{/product/{id}(id = ${product.id})}">Edit</a> | <a
                             th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td> -->
-                    </tr>
-                </tbody>
-            </table>
+                </tr>
+            </tbody>
+        </table>
     </main>
 </body>
 
