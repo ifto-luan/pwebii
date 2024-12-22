@@ -6,8 +6,10 @@
         <form th:action="@{/product/search}" method="get">
             <div class="input-group mb-3">
                 <!-- <label for="description">Product description</label> -->
-                <input class="form-control" type="text" th:value="${searchTerm}" name="description" placeholder="Enter product description" />
-                <button type="submit" class="btn btn-outline-secondary">Search</button>
+                <input class="form-control" type="text" th:value="${searchTerm}" name="description"
+                    placeholder="Enter product description" />
+                <button type="submit" class="btn btn-outline-secondary"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </form>
 
@@ -24,10 +26,12 @@
                 <tr th:each="product : ${products}">
                     <!-- <td th:text="${product.id}"></td> -->
                     <td th:text="${product.description}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td><a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary">Add to Cart</a>
+                    <td th:text="'$'+${product.price}"></td>
+                    <td class="d-flex justify-content-end">
+                        <a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary">Add to Cart</a>
                         <!-- <td><a th:href="@{/product/{id}(id = ${product.id})}">Edit</a> | <a
-                            th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td> -->
+                                    th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td> -->
+                    </td>
                 </tr>
             </tbody>
         </table>
