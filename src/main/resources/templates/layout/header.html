@@ -8,34 +8,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Client
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/person}">Clients list</a></li>
-                            <li><a class="dropdown-item" th:href="@{/juridical-person/new}">New Client (juridical person)</a></li>
-                            <li><a class="dropdown-item" th:href="@{/natural-person/new}">New Client (natural person)</a></li>
-                        </ul>
-                    </li> -->
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Product
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/product}">Products list</a></li>
-                            <li><a class="dropdown-item" th:href="@{/product/new}">New Product</a></li>
-                        </ul>
-                    </li> -->
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" th:href="@{/sale}">Sales</a>
-                    </li> -->
-                    </li>
-                    <li class="nav-item">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-5">
                         <div>
-                            <a class="nav-link" th:href="@{/cart}"><i class="fa-regular fa-cart-shopping"></i> (<span
-                                    th:if="${session.sale != null}" th:text="${session.sale.items.size()}"></span>)</a>
+                            <h5>
+                                <a class="nav-link" th:href="@{/cart}">
+                                    <i class="bi bi-cart-fill"></i>
+                                    <span class="badge rounded-pill bg-primary" th:text="${session.sale.items.size()}"></span>
+                                </a>
+                            </h5>
                         </div>
                     </li>
                 </ul>

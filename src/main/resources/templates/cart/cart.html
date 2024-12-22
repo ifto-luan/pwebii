@@ -23,9 +23,9 @@
                     <td th:text="${item.total()}"></td>
                     <td>
                         <div class="d-grid gap-4 d-md-flex justify-content-md-end">
-                            <a th:href="@{/cart/add/{id}(id = ${item.product.id})}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-                            <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}" class="btn btn-primary"><i class="fa-solid fa-minus"></i></a>
-                            <a th:href="@{/cart/delete/{id}(id = ${item.product.id})}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            <a th:href="@{/cart/add/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i></a>
+                            <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-dash-lg"></i></a>
+                            <a th:href="@{/cart/delete/{id}(id = ${item.product.id})}" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -35,7 +35,7 @@
         <div class="d-flex justify-content-between">
             <h3><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></h3>
             <div>
-                <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/clear}" class="btn btn-secondary mx-3"">Clear
+                <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/clear}" class="btn btn-secondary mx-3">Clear
                     cart</a>
                 <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/finish}" class="btn btn-success">Finish
                     sale</a>

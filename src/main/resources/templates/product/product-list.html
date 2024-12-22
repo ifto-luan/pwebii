@@ -8,8 +8,7 @@
                 <!-- <label for="description">Product description</label> -->
                 <input class="form-control" type="text" th:value="${searchTerm}" name="description"
                     placeholder="Enter product description" />
-                <button type="submit" class="btn btn-outline-secondary"><i
-                        class="fa-solid fa-magnifying-glass"></i></button>
+                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
             </div>
         </form>
 
@@ -28,7 +27,8 @@
                     <td th:text="${product.description}"></td>
                     <td th:text="'$'+${product.price}"></td>
                     <td class="d-flex justify-content-end">
-                        <a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary">Add to Cart</a>
+                        <a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary btn-sm"><i
+                                class="bi bi-cart-plus-fill"></i></a>
                         <!-- <td><a th:href="@{/product/{id}(id = ${product.id})}">Edit</a> | <a
                                     th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td> -->
                     </td>
