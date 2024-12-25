@@ -35,18 +35,39 @@ public class PersonController {
     public ModelAndView getPerson(@PathVariable Long id, ModelMap model) {
         
         Person p = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Person not found"));
-        model.addAttribute("person", p);
-        return new ModelAndView("person/person");
+        
+        if (p.isJuridicalPerson()) {
+            model.addAttribute("juridicalPerson", p);
+            return new ModelAndView("person/juridical-person");
+            
+        }
+        
+        if (p.isNaturalPerson()) {
+            model.addAttribute("naturalPerson", p);
+            return new ModelAndView("person/natural-person");
+        }
+
+        return new ModelAndView("redirect:/person");
 
     }
 
     @GetMapping("/search")
-    public ModelAndView findByName(@RequestParam(name = "name", required = false) String name, ModelMap model) {
+    public ModelAndView findByName(@RequestParam(required = false) String name, ModelMap model) {
     
         List<Person> people;
 
-        if (name != null && !name.isEmpty()) {
-            people = repo.findAllContainingName(name);
+        if (name != null) {
+
+            if (!name.isEmpty()) {
+
+                people = repo.findAllContainingName(name);
+            
+            } else {
+
+                return new ModelAndView("redirect:/person");
+
+            }
+
         } else {
             people = repo.findAll();
         }
@@ -61,10 +82,28 @@ public class PersonController {
     
 
     @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
+    public ModelAndView delete(@PathVariable Long id) {
         repo.deleteById(id);
         return  new ModelAndView("redirect:/person");
 
+    }
+
+    public static String applyDocumentMask(String rawDocument) {
+        if (rawDocument.length() == 11) {
+            
+            return rawDocument.replaceAll("(\\d{3})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d{1,2})$", "$1-$2");
+        } else if (rawDocument.length() == 14) {
+            
+            return rawDocument.replaceAll("(\\d{2})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d)", "$1/$2")
+                               .replaceAll("(\\d{4})(\\d{1,2})$", "$1-$2");
+        } else {
+            
+            throw new IllegalArgumentException("Invalid CPF or CNPJ length");
+        }
     }
     
 

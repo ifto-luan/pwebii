@@ -2,13 +2,18 @@
 <html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
-    <main class="container">
-        <form th:action="@{/product/search}" method="get">
-            <div class="input-group mb-3">
-                <!-- <label for="description">Product description</label> -->
-                <input class="form-control" type="text" th:value="${searchTerm}" name="description" placeholder="Enter product description" />
-                <button type="submit" class="btn btn-outline-secondary">Search</button>
+    <main class="container flex-grow-1">
+        <form th:action="@{/product/search}" method="get" class="row" >
+            <div class="col input-group mb-3">
+                <input class="form-control" type="text" th:value="${searchTerm}" name="description"
+                    placeholder="Enter product description" />
+                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
             </div>
+            <!-- <div class="col">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    New Product
+                </button>
+            </div> -->
         </form>
 
         <table border="1" class="table table-hover table-borderless">
@@ -24,10 +29,13 @@
                 <tr th:each="product : ${products}">
                     <!-- <td th:text="${product.id}"></td> -->
                     <td th:text="${product.description}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td><a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary">Add to Cart</a>
+                    <td th:text="'$'+${product.price}"></td>
+                    <td class="d-flex justify-content-end">
+                        <a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary btn-sm"><i
+                                class="bi bi-cart-plus-fill"></i></a>
                         <!-- <td><a th:href="@{/product/{id}(id = ${product.id})}">Edit</a> | <a
-                            th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td> -->
+                                    th:href="@{/product/delete/{id}(id = ${product.id})}">Delete</td> -->
+                    </td>
                 </tr>
             </tbody>
         </table>

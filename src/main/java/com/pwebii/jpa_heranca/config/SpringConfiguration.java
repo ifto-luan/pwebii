@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SpringConfiguration implements WebMvcConfigurer {
 
     @Override
-    public void addViewControllers(@SuppressWarnings("null") ViewControllerRegistry registry) {
+    public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:product");
         registry.addViewController("/home").setViewName("redirect:product");
 
