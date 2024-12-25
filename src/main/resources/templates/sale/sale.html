@@ -2,27 +2,33 @@
 <html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
-    <main>
+    <main class="container flex-grow-1">
 
-        <div>
-            <p><strong>ID:</strong> <span th:if="${sale.id}" th:text="${sale.id}"></span></p>
-            <p><strong>Date:</strong> <span th:text="${sale.date}"></span></p>
-            <p><strong>Client Id:</strong> <span th:text="${sale.client.id}"></span></p>
-            <p><strong>Client Name:</strong> <span th:text="${sale.client.name}"></span></p>
-            <p><strong>Total Value:</strong> $<span th:text="${sale.calculateTotal}"></span></p>
-        </div>
-
-        <h2>Products in this sale</h2>
-        <hr>
-        <table class="container">
+        <fieldset disabled>
+            <div class="form-group row mb-3">
+                <div class="col-md-1">
+                    <label for="id">Sale Nº</label>
+                    <input class="form-control" type="text" th:field="*{sale.id}">
+                </div>
+                <div class="col-md-5">
+                    <label for="client">Client</label>
+                    <input class="form-control" type="text" th:field="*{sale.client.name}">
+                </div>
+                <div class="col-md-3">
+                    <label for="date">Date</label>
+                    <input class="form-control" type="text" th:field="*{sale.date}">
+                </div>
+            </div>
+        </fieldset>
+        <h3>Products in this sale</h3>
+        <table class="table table-borderless mt-4">
             <thead>
-                <tr>
+                <tr class="table-dark">
                     <th>ID</th>
                     <th>Description</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,8 +41,10 @@
                 </tr>
             </tbody>
         </table>
-        <br>
-        <a th:href="@{/sale}">Back to sales List</a>
+        <div class="d-flex justify-content-between mt-5">
+            <h4><strong>Total Value:</strong> $<span th:text="${sale.calculateTotal}"></span></h4>
+        </div>
+        <a th:href="@{/sale}" class="btn btn-primary mt-5">Voltar</a>
     </main>
 </body>
 

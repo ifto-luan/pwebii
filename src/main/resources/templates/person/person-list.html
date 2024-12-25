@@ -2,14 +2,22 @@
 <html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
-    <main>
-      
-        <form th:action="@{/person/search}" method="get">
-            <input type="text" th:value="${searchName}" name="name" placeholder="Enter client name" />
-            <button type="submit">Search</button>
+    <main class="container flex-grow-1">
+
+        <form th:action="@{/person/search}" method="get" class="row">
+            <div class="col input-group mb-3">
+                <input class="form-control" type="text" th:value="${searchName}" name="name"
+                    placeholder="Enter the person name" />
+                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    New Person
+                </button>
+            </div>
         </form>
 
-        <table border="1">
+        <table border="1" class="table table-hover table-borderless">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -27,13 +35,48 @@
                     <td th:text="${person.name}"></td>
                     <td th:if="${person.isNaturalPerson}" th:text="${person.cpf}"></td>
                     <td th:if="${person.isJuridicalPerson}" th:text="${person.cnpj}"></td>
-                    <td><a th:href="@{/person/{id}(id = ${person.id})}"> Edit </a>|
-                        <a th:href="@{/person/delete/{id}(id = ${person.id})}"> Delete </a>|
-                        <a th:href="@{/sale/client_sales/{id}(id = ${person.id})}"> List all sales </a>
+                    <td class="fs-3"><a class="btn btn-primary btn-sm" th:href="@{/person/{id}(id = ${person.id})}"><i
+                                class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-primary btn-sm" th:href="@{/person/delete/{id}(id = ${person.id})}"><i
+                                class="bi bi-trash-fill"></i></a>
+                        <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-title="List all client sales"
+                            th:href="
+                            @{/sale/client_sales/{id}(id=${person.id})}"><i class="bi bi-list-task"></i></a>
+
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Natural or Juridical Person?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between m-5">
+                            <a class="btn btn-primary btn-lg" th:href="@{/natural-person/new}">Natural Person</a>
+                            <a class="btn btn-primary btn-lg" th:href="@{/juridical-person/new}">Juridical Person</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+
+            const myModal = document.getElementById('myModal')
+            const myInput = document.getElementById('myInput')
+
+            myModal.addEventListener('shown.bs.modal', () => {
+                myInput.focus()
+            })
+
+        </script>
     </main>
 </body>
 

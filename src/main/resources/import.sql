@@ -42,16 +42,16 @@ INSERT INTO Product (description, price) VALUES ('Brave New World', 13.40);
 INSERT INTO Product (description, price) VALUES ('The Great Gatsby', 10.50);
 INSERT INTO Product (description, price) VALUES ('War and Peace', 20.00);
 
-INSERT INTO sale (client_id, date) VALUES (2, '2024-10-05');    
-INSERT INTO sale (client_id, date) VALUES (1, '2024-10-01');      
-INSERT INTO sale (client_id, date) VALUES (3, '2024-10-10');   
-INSERT INTO sale (client_id, date) VALUES (1, '2024-10-12');  
-INSERT INTO sale (client_id, date) VALUES (1, '2024-10-15');   
-INSERT INTO sale (client_id, date) VALUES (6, '2024-10-18');   
-INSERT INTO sale (client_id, date) VALUES (2, '2024-10-20');    
-INSERT INTO sale (client_id, date) VALUES (1, '2024-10-22');   
-INSERT INTO sale (client_id, date) VALUES (3, '2024-10-25')    
-INSERT INTO sale (client_id, date) VALUES (10, '2024-10-28');   
+INSERT INTO sale (client_id, date) VALUES (2, '2024-12-05');    
+INSERT INTO sale (client_id, date) VALUES (1, '2024-12-01');      
+INSERT INTO sale (client_id, date) VALUES (3, '2024-12-10');   
+INSERT INTO sale (client_id, date) VALUES (1, '2024-12-12');  
+INSERT INTO sale (client_id, date) VALUES (1, '2024-12-15');   
+INSERT INTO sale (client_id, date) VALUES (6, '2024-12-18');   
+INSERT INTO sale (client_id, date) VALUES (2, '2024-12-20');    
+INSERT INTO sale (client_id, date) VALUES (1, '2024-12-22');   
+INSERT INTO sale (client_id, date) VALUES (3, '2024-12-25')    
+INSERT INTO sale (client_id, date) VALUES (10, '2024-12-28');   
 
 
 INSERT INTO sale_item (sale_id, product_id, quantity) VALUES (1, 1, 1); 

@@ -7,16 +7,25 @@
 </head>
 
 <body>
-    <main>
-        <form th:action="@{/product/save}"
-        th:object="${product}" method="post">
-            <input type="hidden" th:field="*{id}">
-            <label for="name">Description</label>
-            <input type="text" th:field="*{description}" placeholder="Description">
-            <label for="price">Price</label>
-            <input type="text" th:field="*{price}" placeholder="Name">
-            <input type="submit" value="Submit">
+    <main class="container flex-grow-1">
+        <div class="mb-3">
+            <h2>Product registration</h2>
+        </div>
+        <form th:action="@{/product/save}" th:object="${product}" method="post">
+            <div class="form-group mb-3">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" th:field="*{description}" placeholder="Description">
+                    <label for="name">Description</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input  class="form-control" type="text" th:field="*{price}" placeholder="Name">
+                    <label for="price">Price</label>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary">
+            </div>
         </form>
     </main>
 </body>
+
 </html>

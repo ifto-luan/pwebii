@@ -2,7 +2,6 @@ package com.pwebii.jpa_heranca.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pwebii.jpa_heranca.model.entity.Sale;
 import com.pwebii.jpa_heranca.model.repository.SaleRepository;
 
-
 @Controller
 @RequestMapping("sale")
 public class SaleController {
@@ -33,21 +31,27 @@ public class SaleController {
     }
 
     @GetMapping("/{id}")
-    public ModelAndView getSale(@PathVariable("id") Long id, ModelMap model) {
+    public ModelAndView getSale(@PathVariable Long id, ModelMap model) {
         model.addAttribute("sale", repo.findById(id).orElseThrow(() -> new NoSuchElementException("Sell not found")));
         return new ModelAndView("sale/sale", model);
     }
 
     @GetMapping("/search")
-    public ModelAndView findByDate(@RequestParam(name = "date", required = false) String date, ModelMap model) {
+    public ModelAndView findByDate(@RequestParam(required = false) String date, ModelMap model) {
 
         List<Sale> sales;
 
-        if (date != null && !date.isEmpty()) {
+        if (date != null) {
 
-            System.out.println(date);
+            if (!date.isEmpty()) {
 
-            sales = repo.findByDate(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                sales = repo.findByDate(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+            } else {
+
+                return new ModelAndView("redirect:/sale");
+
+            }
 
         } else {
 
@@ -63,24 +67,25 @@ public class SaleController {
     }
 
     @GetMapping("/client_sales/{id}")
-    public ModelAndView listSalesByClientId(@PathVariable("id") Long id, ModelMap model) {
+    public ModelAndView listSalesByClientId(@PathVariable Long id, ModelMap model) {
 
         List<Sale> sales;
 
         if (id != null) {
 
             sales = repo.findByClientId(id);
-            model.addAttribute("clientName", sales.get(0).getClient().getName());
-            
-        } else {
-            
-            sales = new ArrayList<>();
-            
+
+            if (!sales.isEmpty()) {
+
+                model.addAttribute("clientName", sales.get(0).getClient().getName());
+                model.addAttribute("sales", sales);
+                return new ModelAndView("sale/sales-per-client");
+
+            }
+
         }
-        
-        model.addAttribute("sales", sales);
-        
-        return new ModelAndView("sale/sales-per-client");
+
+        return new ModelAndView("redirect:/person");
 
     }
 }

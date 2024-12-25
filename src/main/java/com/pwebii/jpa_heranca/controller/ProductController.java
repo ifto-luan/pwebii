@@ -27,6 +27,7 @@ public class ProductController {
     @GetMapping
     public ModelAndView listProducts(ModelMap model) {
         model.addAttribute("products", repo.findAll());
+        model.addAttribute("customPageTitle", "Products");
         return new ModelAndView("product/product-list");
     }
 
@@ -39,13 +40,20 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ModelAndView findByDescription(@RequestParam(name = "description", required = false) String description, ModelMap model) {
+    public ModelAndView findByDescription(@RequestParam(required = false) String description, ModelMap model) {
 
         List<Product> products;
 
-        if (description != null && !description.isEmpty()) {
+        if (description != null) {
 
-            products = repo.findAllContainingDescription(description);
+            if (!description.isEmpty()) {
+
+                products = repo.findAllContainingDescription(description);
+            
+            } else {
+                return new ModelAndView("redirect:/product");
+            }
+
 
         } else {
 
@@ -73,7 +81,7 @@ public class ProductController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
+    public ModelAndView delete(@PathVariable Long id) {
         repo.deleteById(id);
         return  new ModelAndView("redirect:/product");
 

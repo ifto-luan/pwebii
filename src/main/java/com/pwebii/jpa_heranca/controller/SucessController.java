@@ -12,7 +12,7 @@ public class SucessController {
     
     @GetMapping
     public ModelAndView getMethodName() {
-        return new ModelAndView("/success/sale-success-page");
+        return new ModelAndView("/cart/sale-success-page");
     }
     
 

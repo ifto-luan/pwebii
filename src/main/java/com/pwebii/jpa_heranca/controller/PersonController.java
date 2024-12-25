@@ -41,12 +41,22 @@ public class PersonController {
     }
 
     @GetMapping("/search")
-    public ModelAndView findByName(@RequestParam(name = "name", required = false) String name, ModelMap model) {
+    public ModelAndView findByName(@RequestParam(required = false) String name, ModelMap model) {
     
         List<Person> people;
 
-        if (name != null && !name.isEmpty()) {
-            people = repo.findAllContainingName(name);
+        if (name != null) {
+
+            if (!name.isEmpty()) {
+
+                people = repo.findAllContainingName(name);
+            
+            } else {
+
+                return new ModelAndView("redirect:/person");
+
+            }
+
         } else {
             people = repo.findAll();
         }
@@ -61,7 +71,7 @@ public class PersonController {
     
 
     @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
+    public ModelAndView delete(@PathVariable Long id) {
         repo.deleteById(id);
         return  new ModelAndView("redirect:/person");
 

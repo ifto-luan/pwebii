@@ -2,10 +2,10 @@
 <html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
-    <main class="container">
+    <main class="container flex-grow-1">
         <h2 style="font-weight: bold;">Your cart</h2>
         <hr>
-        <table class="table table-hover table-borderless">
+        <table class="table table-borderless">
             <thead>
                 <tr>
                     <th>Description</th>
@@ -23,8 +23,8 @@
                     <td th:text="${item.total()}"></td>
                     <td>
                         <div class="d-grid gap-4 d-md-flex justify-content-md-end">
-                            <a th:href="@{/cart/add/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i></a>
-                            <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-dash-lg"></i></a>
+                            <a th:href="@{/cart/add/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i></a>
+                            <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-dash"></i></a>
                             <a th:href="@{/cart/delete/{id}(id = ${item.product.id})}" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>
@@ -43,7 +43,7 @@
         </div>
         <hr>
         <div class="container">
-            <a th:href="@{/product}" class="btn btn-info">Back to Product List</a>
+            <a th:href="@{/product}" class="btn btn-primary">Back to Product List</a>
         </div>
     </main>
 </body>
