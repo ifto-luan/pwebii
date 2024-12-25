@@ -3,27 +3,30 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Client</title>
+    <title>Product</title>
 </head>
 
 <body>
     <main class="container flex-grow-1">
-        <div class="mb-3">
+        <div class="mb-3 d-flex justify-content-between align-items-center">
             <h2>Product registration</h2>
+            <a th:href="@{/product}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
         </div>
         <form th:action="@{/product/save}" th:object="${product}" method="post">
-            <div class="form-group mb-3">
+            <div class="row">
                 <input type="hidden" th:field="*{id}">
-                <div class="form-floating mb-3">
-                    <input class="form-control" type="text" th:field="*{description}" placeholder="Description">
+                <div class="col-md-4">
                     <label for="name">Description</label>
+                    <input class="form-control" type="text" th:field="*{description}" th:errorclass="is-invalid">
+                    <label class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
                 </div>
-                <div class="form-floating mb-3">
-                    <input  class="form-control" type="text" th:field="*{price}" placeholder="Name">
+                <div class="col-md-4">
                     <label for="price">Price</label>
+                    <input  class="form-control" type="text" th:field="*{price}" th:errorclass="is-invalid">
+                    <label class="invalid-feedback" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></label>
                 </div>
-                <input type="submit" value="Submit" class="btn btn-primary">
             </div>
+            <input type="submit" value="Submit" class="btn btn-primary mt-3">
         </form>
     </main>
 </body>

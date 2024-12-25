@@ -35,8 +35,19 @@ public class PersonController {
     public ModelAndView getPerson(@PathVariable Long id, ModelMap model) {
         
         Person p = repo.findById(id).orElseThrow(() -> new NoSuchElementException("Person not found"));
-        model.addAttribute("person", p);
-        return new ModelAndView("person/person");
+        
+        if (p.isJuridicalPerson()) {
+            model.addAttribute("juridicalPerson", p);
+            return new ModelAndView("person/juridical-person");
+            
+        }
+        
+        if (p.isNaturalPerson()) {
+            model.addAttribute("naturalPerson", p);
+            return new ModelAndView("person/natural-person");
+        }
+
+        return new ModelAndView("redirect:/person");
 
     }
 
@@ -75,6 +86,24 @@ public class PersonController {
         repo.deleteById(id);
         return  new ModelAndView("redirect:/person");
 
+    }
+
+    public static String applyDocumentMask(String rawDocument) {
+        if (rawDocument.length() == 11) {
+            
+            return rawDocument.replaceAll("(\\d{3})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d{1,2})$", "$1-$2");
+        } else if (rawDocument.length() == 14) {
+            
+            return rawDocument.replaceAll("(\\d{2})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d)", "$1.$2")
+                               .replaceAll("(\\d{3})(\\d)", "$1/$2")
+                               .replaceAll("(\\d{4})(\\d{1,2})$", "$1-$2");
+        } else {
+            
+            throw new IllegalArgumentException("Invalid CPF or CNPJ length");
+        }
     }
     
 

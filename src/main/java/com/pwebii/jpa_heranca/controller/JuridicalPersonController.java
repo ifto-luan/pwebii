@@ -2,7 +2,6 @@ package com.pwebii.jpa_heranca.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +22,15 @@ public class JuridicalPersonController {
     private JuridicalPersonRepository repo;
 
     @GetMapping("/new")
-    public ModelAndView newJuridicalPerson(ModelMap model) {
-        model.addAttribute("person", new JuridicalPerson());
-        return new ModelAndView("./person/person");
+    public ModelAndView newJuridicalPerson(JuridicalPerson p) {
+        return new ModelAndView("./person/juridical-person");
     }
 
     @PostMapping("/save")
-    public ModelAndView saveJuridicalPerson(@Valid JuridicalPerson p, BindingResult result, ModelMap model) {
+    public ModelAndView saveJuridicalPerson(@Valid JuridicalPerson p, BindingResult result) {
 
         if (result.hasErrors()) {
-            model.addAttribute("person", p);
-            return new ModelAndView("person/person");
+            return newJuridicalPerson(p);
         }
         
         repo.save(p);
