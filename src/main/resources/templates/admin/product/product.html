@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+<html lang="en" th:replace="~{layout/admin/admin-base-layout :: admin-base-layout(~{::main})}">
 
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <main class="container flex-grow-1">
         <div class="mb-3 d-flex justify-content-between align-items-center">
             <h2>Product registration</h2>
-            <a th:href="@{/product}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
+            <a th:href="@{/admin/product}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
         </div>
         <form th:action="@{/product/save}" th:object="${product}" method="post">
             <div class="row">

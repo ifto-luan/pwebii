@@ -40,7 +40,7 @@ public class CartController {
     @GetMapping
     public ModelAndView viewCart(ModelMap model) {
         model.addAttribute("customPageTitle", "Your Cart");
-        return (sale != null && sale.getItems().size() > 0) ? new ModelAndView("cart/cart") : new ModelAndView("cart/empty-cart");
+        return (sale != null && sale.getItems().size() > 0) ? new ModelAndView("user/cart/cart") : new ModelAndView("user/cart/empty-cart");
     }
 
     @GetMapping("/add/{id}")
@@ -66,7 +66,7 @@ public class CartController {
     @GetMapping("/clear")
     public String clearCart() {
         sale.clear();
-        return "redirect:/product";
+        return "redirect:/home";
     }
 
     @GetMapping("/finish")

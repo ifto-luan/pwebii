@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 
 
 @Controller
-@RequestMapping("natural-person")
+@RequestMapping("admin/natural-person")
 public class NaturalPersonController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class NaturalPersonController {
 
     @GetMapping("/new")
     public ModelAndView newNaturalPerson(NaturalPerson p) {
-        return new ModelAndView("/person/natural-person");
+        return new ModelAndView("admin/person/natural-person");
     }
     
     @PostMapping("/save")
