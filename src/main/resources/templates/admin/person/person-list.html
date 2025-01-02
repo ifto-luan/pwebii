@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+<html lang="en" th:replace="~{layout/admin/admin-base-layout :: admin-base-layout(~{::main})}">
 
 <body>
     <main class="container flex-grow-1">
 
-        <form th:action="@{/person/search}" method="get" class="row">
+        <form th:action="@{/admin/person/search}" method="get" class="row">
             <div class="col input-group mb-3">
                 <input class="form-control" type="text" th:value="${searchName}" name="name"
                     placeholder="Enter the person name" />
@@ -35,9 +35,9 @@
                     <td th:text="${person.name}"></td>
                     <td th:if="${person.isNaturalPerson}" th:text="${person.cpf}"></td>
                     <td th:if="${person.isJuridicalPerson}" th:text="${person.cnpj}"></td>
-                    <td class="fs-3"><a class="btn btn-primary btn-sm" th:href="@{/person/{id}(id = ${person.id})}"><i
+                    <td class="fs-3"><a class="btn btn-primary btn-sm" th:href="@{/admin/person/{id}(id = ${person.id})}"><i
                                 class="bi bi-pencil-square"></i></a>
-                        <a class="btn btn-primary btn-sm" th:href="@{/person/delete/{id}(id = ${person.id})}"><i
+                        <a class="btn btn-primary btn-sm" th:href="@{/admin/person/delete/{id}(id = ${person.id})}"><i
                                 class="bi bi-trash-fill"></i></a>
                         <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-title="List all client sales"
                             th:href="
@@ -58,8 +58,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-between m-5">
-                            <a class="btn btn-primary btn-lg" th:href="@{/natural-person/new}">Natural Person</a>
-                            <a class="btn btn-primary btn-lg" th:href="@{/juridical-person/new}">Juridical Person</a>
+                            <a class="btn btn-primary btn-lg" th:href="@{/admin/natural-person/new}">Natural Person</a>
+                            <a class="btn btn-primary btn-lg" th:href="@{/admin/juridical-person/new}">Juridical Person</a>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+<html lang="en" th:replace="~{layout/user/user-base-layout :: user-base-layout(~{::main})}">
 
 <body>
     <main class="container flex-grow-1">
@@ -43,7 +43,7 @@
         </div>
         <hr>
         <div class="container">
-            <a th:href="@{/product}" class="btn btn-primary">Back to Product List</a>
+            <a th:href="@{/home}" class="btn btn-primary">Back to Product List</a>
         </div>
     </main>
 </body>

@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 
 
 @Controller
-@RequestMapping("product")
+@RequestMapping("admin/product")
 public class ProductController {
 
     @Autowired
@@ -30,15 +30,15 @@ public class ProductController {
     @GetMapping
     public ModelAndView listProducts(ModelMap model) {
         model.addAttribute("products", repo.findAll());
-        model.addAttribute("customPageTitle", "Products");
-        return new ModelAndView("product/product-list");
+        model.addAttribute("customPageTitle", "Product Management");
+        return new ModelAndView("admin/product/product-list");
     }
 
     @GetMapping("/{id}")
     public ModelAndView getProduct(@PathVariable Long id, ModelMap model) {
 
         model.addAttribute("product", repo.findById(id));
-        return new ModelAndView("product/product");
+        return new ModelAndView("admin/product/product");
 
     }
 
@@ -54,7 +54,7 @@ public class ProductController {
                 products = repo.findAllContainingDescription(description);
             
             } else {
-                return new ModelAndView("redirect:/product");
+                return new ModelAndView("redirect:/admin/product");
             }
 
 
@@ -66,14 +66,14 @@ public class ProductController {
 
         model.addAttribute("products", products);
         model.addAttribute("searchTerm", description);
-        return new ModelAndView("product/product-list");
+        return new ModelAndView("admin/product/product-list");
 
     }
     
 
     @GetMapping("/new")
     public ModelAndView newProduct(Product p) {
-        return new ModelAndView("product/product");
+        return new ModelAndView("admin/product/product");
     }
     
     @PostMapping("/save")
@@ -84,13 +84,13 @@ public class ProductController {
 
         repo.save(p);
         // flash.addFlashAttribute("successMessage", "Produto salvo com sucesso");
-        return new ModelAndView("redirect:/product");
+        return new ModelAndView("redirect:/admin/product");
     }
 
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable Long id) {
         repo.deleteById(id);
-        return  new ModelAndView("redirect:/product");
+        return  new ModelAndView("redirect:/admin/product");
 
     }
 

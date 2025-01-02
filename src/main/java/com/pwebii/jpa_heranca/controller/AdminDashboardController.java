@@ -7,13 +7,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping("success")
-public class SucessController {
-    
+@RequestMapping("admin")
+public class AdminDashboardController {
+
     @GetMapping
     public ModelAndView getMethodName() {
-        return new ModelAndView("user/cart/sale-success-page");
+        return new ModelAndView("admin/panel");
     }
     
-
+    
 }

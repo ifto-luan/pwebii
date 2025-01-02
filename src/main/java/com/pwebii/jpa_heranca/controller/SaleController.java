@@ -18,7 +18,7 @@ import com.pwebii.jpa_heranca.model.entity.Sale;
 import com.pwebii.jpa_heranca.model.repository.SaleRepository;
 
 @Controller
-@RequestMapping("sale")
+@RequestMapping("admin/sale")
 public class SaleController {
 
     @Autowired
@@ -27,13 +27,13 @@ public class SaleController {
     @GetMapping
     public ModelAndView listSales(ModelMap model) {
         model.addAttribute("sales", repo.findAll());
-        return new ModelAndView("sale/sale-list", model);
+        return new ModelAndView("admin/sale/sale-list", model);
     }
 
     @GetMapping("/{id}")
     public ModelAndView getSale(@PathVariable Long id, ModelMap model) {
         model.addAttribute("sale", repo.findById(id).orElseThrow(() -> new NoSuchElementException("Sell not found")));
-        return new ModelAndView("sale/sale", model);
+        return new ModelAndView("admin/sale/sale", model);
     }
 
     @GetMapping("/search")
@@ -49,7 +49,7 @@ public class SaleController {
 
             } else {
 
-                return new ModelAndView("redirect:/sale");
+                return new ModelAndView("redirect:/admin/sale");
 
             }
 
@@ -62,7 +62,7 @@ public class SaleController {
         model.addAttribute("sales", sales);
         model.addAttribute("searchDate", date);
 
-        return new ModelAndView("sale/sale-list");
+        return new ModelAndView("admin/sale/sale-list");
 
     }
 
@@ -79,13 +79,13 @@ public class SaleController {
 
                 model.addAttribute("clientName", sales.get(0).getClient().getName());
                 model.addAttribute("sales", sales);
-                return new ModelAndView("sale/sales-per-client");
+                return new ModelAndView("admin/sale/sales-per-client");
 
             }
 
         }
 
-        return new ModelAndView("redirect:/person");
+        return new ModelAndView("redirect:/admin/person");
 
     }
 }

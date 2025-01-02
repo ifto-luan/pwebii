@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+<html lang="en" th:replace="~{layout/admin/admin-base-layout :: admin-base-layout(~{::main})}">
 
 <body>
     <main class="container flex-grow-1">
@@ -44,7 +44,7 @@
         <div class="d-flex justify-content-between mt-5">
             <h4><strong>Total Value:</strong> $<span th:text="${sale.calculateTotal}"></span></h4>
         </div>
-        <a th:href="@{/sale}" class="btn btn-primary mt-5">Voltar</a>
+        <a th:href="@{/admin/sale}" class="btn btn-primary mt-5">Voltar</a>
     </main>
 </body>
 

@@ -18,7 +18,7 @@ import com.pwebii.jpa_heranca.model.repository.PersonRepository;
 
 
 @Controller
-@RequestMapping("person")
+@RequestMapping("admin/person")
 public class PersonController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class PersonController {
     public ModelAndView listClients(ModelMap model) {
         
         model.addAttribute("people", repo.findAll());
-        return new ModelAndView("person/person-list");
+        return new ModelAndView("admin/person/person-list");
     }
 
     @GetMapping("/{id}")
@@ -38,16 +38,16 @@ public class PersonController {
         
         if (p.isJuridicalPerson()) {
             model.addAttribute("juridicalPerson", p);
-            return new ModelAndView("person/juridical-person");
+            return new ModelAndView("admin/person/juridical-person");
             
         }
         
         if (p.isNaturalPerson()) {
             model.addAttribute("naturalPerson", p);
-            return new ModelAndView("person/natural-person");
+            return new ModelAndView("admin/person/natural-person");
         }
 
-        return new ModelAndView("redirect:/person");
+        return new ModelAndView("redirect:/admin/person");
 
     }
 
@@ -64,7 +64,7 @@ public class PersonController {
             
             } else {
 
-                return new ModelAndView("redirect:/person");
+                return new ModelAndView("redirect:/admin/person");
 
             }
 
@@ -75,7 +75,7 @@ public class PersonController {
         model.addAttribute("people", people);
         model.addAttribute("searchName", name);
 
-        return new ModelAndView("person/person-list");
+        return new ModelAndView("admin/person/person-list");
 
 
     }
@@ -84,7 +84,7 @@ public class PersonController {
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable Long id) {
         repo.deleteById(id);
-        return  new ModelAndView("redirect:/person");
+        return  new ModelAndView("redirect:/admin/person");
 
     }
 
