@@ -34,6 +34,6 @@ public class NaturalPersonController {
 
         p.setCpf(p.getCpf().replaceAll("\\D", ""));
         repo.save(p);
-        return new ModelAndView("redirect:/person");
+        return new ModelAndView("redirect:/admin/person");
     }
 }
