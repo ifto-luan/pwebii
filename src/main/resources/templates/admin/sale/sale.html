@@ -35,14 +35,14 @@
                 <tr th:each="item : ${sale.items}">
                     <td th:text="${item.product.id}"></td>
                     <td th:text="${item.product.description}"></td>
-                    <td th:text="${item.product.price}"></td>
+                    <td th:text="${#numbers.formatCurrency(item.product.price)}"></td>
                     <td th:text="${item.quantity}"></td>
-                    <td th:text="${item.total()}"></td>
+                    <td th:text="${#numbers.formatCurrency(item.total())}"></td>
                 </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-between mt-5">
-            <h4><strong>Total Value:</strong> $<span th:text="${sale.calculateTotal}"></span></h4>
+            <h4><strong>Total Value:</strong><span th:text="${#numbers.formatCurrency(sale.calculateTotal)}"></span></h4>
         </div>
         <a th:href="@{/admin/sale}" class="btn btn-primary mt-5">Voltar</a>
     </main>
