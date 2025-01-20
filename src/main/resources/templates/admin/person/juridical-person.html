@@ -12,7 +12,7 @@
             <h2>Juridical person registration</h2>
             <a th:href="@{/admin/person}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
         </div>
-        <form th:action="@{/juridical-person/save}" th:object="${juridicalPerson}" method="post">
+        <form th:action="@{/admin/juridical-person/save}" th:object="${juridicalPerson}" method="post">
             <div class="row">
                 <input type="hidden" th:field="*{id}">
                 <div class="col-md-5">

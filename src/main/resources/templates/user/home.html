@@ -3,7 +3,7 @@
 
 <body>
     <main class="container flex-grow-1">
-        <form th:action="@{/product/search}" method="get" class="row" >
+        <form th:action="@{/home/search}" method="get" class="row" >
             <div class="col input-group mb-3">
                 <input class="form-control" type="text" th:value="${searchTerm}" name="description"
                     placeholder="Enter product description" />

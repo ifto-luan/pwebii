@@ -12,7 +12,7 @@
             <h2>Product registration</h2>
             <a th:href="@{/admin/product}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
         </div>
-        <form th:action="@{/product/save}" th:object="${product}" method="post">
+        <form th:action="@{/admin/product/save}" th:object="${product}" method="post">
             <div class="row">
                 <input type="hidden" th:field="*{id}">
                 <div class="col-md-4">
