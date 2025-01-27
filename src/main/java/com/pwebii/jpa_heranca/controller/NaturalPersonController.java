@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 
 
 @Controller
-@RequestMapping("admin/natural-person")
+@RequestMapping("natural-person")
 public class NaturalPersonController {
 
     @Autowired
