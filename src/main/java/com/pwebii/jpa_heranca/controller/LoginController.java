@@ -15,7 +15,4 @@ public class LoginController {
         return new ModelAndView("layout/login");
     }
 
-
-    
-
 }

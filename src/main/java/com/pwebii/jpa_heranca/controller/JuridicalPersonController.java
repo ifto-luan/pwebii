@@ -34,6 +34,6 @@ public class JuridicalPersonController {
         }
         
         repo.save(p);
-        return new ModelAndView("redirect:/person");
+        return new ModelAndView("redirect:/admin/person");
     }
 }
