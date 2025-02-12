@@ -31,6 +31,18 @@ INSERT INTO juridical_person (person_id, cnpj) VALUES (10, '67890123456789');
 INSERT INTO person (name) VALUES ('Consumer');
 INSERT INTO natural_person (person_id, cpf) VALUES (11, '0');
 
+INSERT INTO person (name) VALUES ('Luan Carvalho de Souza');
+INSERT INTO natural_person (person_id, cpf) VALUES (12, '06468229189');
+
+INSERT INTO e_role (description) VALUES ('ROLE_ADMIN'), ('ROLE_USER')
+
+INSERT INTO e_user (username, password) VALUES ('admin', '$2a$10$GEwE/N36ezGZH7qOZmJauezUyn/BBm70sf28ZlZck.Rd6BKCzKgWe')
+INSERT INTO e_user (username, password) VALUES ('joao', '$2a$10$jT7ffrCWllvYBnVGjusEpeIHPPIUfg5E/mD/0A9I3E2JMyztolkcq')
+
+INSERT INTO user_role (role_id, user_id) VALUES (1, 1)
+INSERT INTO user_role (role_id, user_id) VALUES (2, 1)
+INSERT INTO user_role (role_id, user_id) VALUES (2, 2)
+
 INSERT INTO Product (description, price) VALUES ('The Old Man and the Sea', 10.00);
 INSERT INTO Product (description, price) VALUES ('Of Mice and Men', 15.50);
 INSERT INTO Product (description, price) VALUES ('Moby Dick', 7.25);

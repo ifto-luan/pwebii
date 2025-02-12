@@ -2,70 +2,48 @@ package com.pwebii.jpa_heranca.security;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.pwebii.jpa_heranca.controller.CustomLoginSuccessHandler;
 
-@Configuration // classe de configuração
-@EnableWebSecurity // indica ao Spring que serão definidas configurações personalizadas de
-                   // segurança
+@Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-                customizer -> customizer
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/cart/finish").hasRole("USER")
-                        .anyRequest()
-                        .permitAll()
-        )
-                .formLogin(customizer -> customizer
-                        .loginPage("/login") 
-                        .successHandler(new CustomLoginSuccessHandler())
-                        .permitAll()
-                                     
-                )
-                .httpBasic(withDefaults())
-                .logout(LogoutConfigurer::permitAll) 
-                .rememberMe(withDefaults());
-        return http.build();
-    }
+        @Autowired
+        private UserDetailsConfig userDetailsConfig;
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user1 = User.withUsername("user")
-                .password(passwordEncoder().encode("123"))
-                .roles("USER")
-                .build();
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user1, admin);
-    }
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                                .requestMatchers("/cart/finish").hasRole("USER")
+                                                .anyRequest().permitAll())
+                                .formLogin(form -> form
+                                                .loginPage("/login")
+                                                .successHandler(new CustomLoginSuccessHandler())
+                                                .permitAll())
+                                .httpBasic(withDefaults())
+                                .logout(LogoutConfigurer::permitAll)
+                                .rememberMe(rememberMe -> rememberMe
+                                                .userDetailsService(userDetailsConfig)
+                                                .key("Q1b7UzLYkZ++kJaZGapB/r/SVn4Xq3tvG3ECXElGr1w=")
+                                                .tokenValiditySeconds(86400));
 
-    /**
-     * Com o método, instanciamos uma instância do encoder BCrypt e deixando o
-     * controle dessa instância como responsabilidade do Spring.
-     * Agora, sempre que o Spring Security necessitar condificar um senha, ele já
-     * terá o que precisa configurado.
-     * 
-     * @return
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+                return http.build();
+        }
 
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 }

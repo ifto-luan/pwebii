@@ -19,4 +19,7 @@ public interface SaleRepository extends JpaRepository <Sale, Long>{
     @Query("SELECT s FROM Sale s WHERE s.client.id = :id")
     List<Sale> findByClientId(@Param("id") Long id);
 
+    @Query("SELECT s FROM Sale s JOIN FETCH s.client")
+    List<Sale> findAllWithCustomer();
+
 }

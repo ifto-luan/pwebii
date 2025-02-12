@@ -17,8 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pwebii.jpa_heranca.model.entity.Sale;
 import com.pwebii.jpa_heranca.model.repository.SaleRepository;
 
+import jakarta.transaction.Transactional;
+
 @Controller
 @RequestMapping("admin/sale")
+@Transactional
 public class SaleController {
 
     @Autowired
@@ -26,7 +29,7 @@ public class SaleController {
 
     @GetMapping
     public ModelAndView listSales(ModelMap model) {
-        model.addAttribute("sales", repo.findAll());
+        model.addAttribute("sales", repo.findAllWithCustomer());
         return new ModelAndView("admin/sale/sale-list", model);
     }
 

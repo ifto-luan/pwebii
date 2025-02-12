@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -21,6 +22,9 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(mappedBy = "person")
+    private UserImpl user;
 
     @NotBlank
     private String name;
@@ -53,4 +57,18 @@ public class Person implements Serializable {
     public boolean isJuridicalPerson() {
         return this instanceof JuridicalPerson;
     }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public UserImpl getUser() {
+        return user;
+    }
+
+    public void setUser(UserImpl user) {
+        this.user = user;
+    }
+
+    
 }
