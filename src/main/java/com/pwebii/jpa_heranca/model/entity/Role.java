@@ -26,6 +26,7 @@ public class Role implements GrantedAuthority {
 
     public Role(){ users = new ArrayList<>();
     }
+    
     @Override
     public String getAuthority() {
         return description;

@@ -4,10 +4,10 @@
 <body>
     <main class="container flex-grow-1">
 
-        <form th:action="@{/admin/sale/search}" method="get" class="row">
+        <form th:action="@{/admin/order/search}" method="get" class="row">
             <div class="col-6 col-md-4 col-lg-3">
                 <div class="input-group mb-3">
-                    <input class="form-control form-control-sm" type="date" th:value="${searchDate}" name="date" placeholder="Enter sale date" />
+                    <input class="form-control form-control-sm" type="date" th:value="${searchDate}" name="date" placeholder="Enter order date" />
                     <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
                 </div>
             </div>
@@ -22,12 +22,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="sale : ${sales}">
-                    <td th:text="${sale.id}"></td>
-                    <td th:text="${sale.client.name}"></td>
-                    <td th:text="${#temporals.format(sale.date, 'dd/MM/yyyy')}"></td>
-                    <td th:text="${sale.calculateTotal}"></td>
-                    <td><a class="btn btn-outline-secondary" data-bs-toggle="tooltip" data-bs-title="See sale detais" th:href="@{/admin/sale/{id}(id = ${sale.id})}"><i class="bi bi-card-text"></i></a></td>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.client.name}"></td>
+                    <td th:text="${#temporals.format(order.date, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${order.calculateTotal}"></td>
+                    <td><a class="btn btn-outline-secondary" data-bs-toggle="tooltip" data-bs-title="See order detais" th:href="@{/admin/order/{id}(id = ${order.id})}"><i class="bi bi-card-text"></i></a></td>
                 </tr>
             </tbody>
         </table>

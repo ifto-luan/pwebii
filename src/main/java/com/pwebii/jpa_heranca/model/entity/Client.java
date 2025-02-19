@@ -7,14 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Person implements Serializable {
+public class Client implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -23,11 +20,17 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "person")
+    @NotBlank
+    private String identifier;
+
+    @OneToOne(mappedBy = "client")
     private UserImpl user;
 
     @NotBlank
     private String name;
+
+    @NotBlank
+    private String type;
 
     public Long getId() {
         return id;
@@ -44,20 +47,7 @@ public class Person implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public String toString() {
-        return "Person [id=" + id + ", name=" + name + "]";
-    }
-
-    public boolean isNaturalPerson() {
-        return this instanceof NaturalPerson;
-    }
-
-    public boolean isJuridicalPerson() {
-        return this instanceof JuridicalPerson;
-    }
-
+    
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
@@ -70,5 +60,19 @@ public class Person implements Serializable {
         this.user = user;
     }
 
-    
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }   
 }

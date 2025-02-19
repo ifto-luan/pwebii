@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pwebii.jpa_heranca.model.entity.Order;
 import com.pwebii.jpa_heranca.model.entity.Product;
-import com.pwebii.jpa_heranca.model.entity.Sale;
-import com.pwebii.jpa_heranca.model.repository.PersonRepository;
+// import com.pwebii.jpa_heranca.model.repository.ClientRepository;
+import com.pwebii.jpa_heranca.model.repository.OrderRepository;
 import com.pwebii.jpa_heranca.model.repository.ProductRepository;
-import com.pwebii.jpa_heranca.model.repository.SaleRepository;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -30,52 +30,51 @@ public class CartController {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private SaleRepository saleRepository;
-    @Autowired
-    private PersonRepository personRepository;
+    private OrderRepository orderRepository;
+    // @Autowired
+    // private ClientRepository clientRepository;
 
     @Autowired
-    private Sale sale;
+    private Order order;
 
     @GetMapping
     public ModelAndView viewCart(ModelMap model) {
         model.addAttribute("customPageTitle", "Your Cart");
-        return (sale != null && sale.getItems().size() > 0) ? new ModelAndView("user/cart/cart") : new ModelAndView("user/cart/empty-cart");
+        return (order != null && order.getItems().size() > 0) ? new ModelAndView("user/cart/cart") : new ModelAndView("user/cart/empty-cart");
     }
 
     @GetMapping("/add/{id}")
     public ModelAndView addToCart(@PathVariable("id") Long productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
-        sale.addItem(product, 1);
+        order.addItem(product, 1);
         return new ModelAndView("redirect:/cart");
     }
 
     @GetMapping("/remove/{id}")
     public ModelAndView removeFromCart(@PathVariable("id") Long productId) {
-        sale.removeItem(productId, 1);
+        order.removeItem(productId, 1);
         return new ModelAndView("redirect:/cart");
     }
 
 
     @GetMapping("/delete/{id}")
     public ModelAndView deleteFromCart(@PathVariable("id") Long productId) {
-        sale.removeItem(productId);
+        order.removeItem(productId);
         return new ModelAndView("redirect:/cart");
     }
 
     @GetMapping("/clear")
     public String clearCart() {
-        sale.clear();
+        order.clear();
         return "redirect:/home";
     }
 
     @GetMapping("/finish")
     public ModelAndView finish(HttpSession session) {
             
-        sale.setDate(LocalDate.now());
-        sale.setClient(personRepository.findById(Long.valueOf(11)).orElseThrow(() -> new NoSuchElementException("Person not found")));
-        saleRepository.save(sale);
-        session.setAttribute("sale", new Sale());
+        order.setDate(LocalDate.now());
+        orderRepository.save(order);
+        session.setAttribute("order", new Order());
         return new ModelAndView("redirect:/success");
 
 

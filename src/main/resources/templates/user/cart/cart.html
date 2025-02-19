@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="item : ${session.sale.items}">
+                <tr th:each="item : ${session.order.items}">
                     <td th:text="${item.product.description}"></td>
                     <td th:text="${item.product.price}"></td>
                     <td th:text="${item.quantity}"></td>
@@ -33,12 +33,12 @@
         </table>
         <br>
         <div class="d-flex justify-content-between">
-            <h3><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></h3>
+            <h3><strong>Total Value:</strong> $<span th:text="${session.order.calculateTotal}"></span></h3>
             <div>
-                <a onclick="return window.confirm('Are you shure about cleaning this cart?')"  th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/clear}" class="btn btn-secondary mx-3">Clear
+                <a onclick="return window.confirm('Are you shure about cleaning this cart?')"  th:if="${!session.order.items.isEmpty}" th:href="@{/cart/clear}" class="btn btn-secondary mx-3">Clear
                     cart</a>
-                <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/finish}" class="btn btn-success">Finish
-                    sale</a>
+                <a th:if="${!session.order.items.isEmpty}" th:href="@{/cart/finish}" class="btn btn-success">Finish
+                    order</a>
             </div>
         </div>
         <hr>

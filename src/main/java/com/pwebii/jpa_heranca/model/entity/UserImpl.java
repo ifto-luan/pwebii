@@ -16,30 +16,28 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "e_user")
 public class UserImpl implements UserDetails {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
+    @JoinColumn(name = "client_id")
+    private Client client;
 
+    @NotNull
     private String username;
 
+    @NotNull
     private String password;
 
     @ManyToMany
-    @JoinTable (
-        name = "user_role",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
 
     @Override
@@ -50,11 +48,6 @@ public class UserImpl implements UserDetails {
     @Override
     public String getPassword() {
         return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
     }
 
     @Override
@@ -85,24 +78,32 @@ public class UserImpl implements UserDetails {
         this.id = id;
     }
 
-    public Person getPerson() {
-        return person;
+    public Client getClient() {
+        return client;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public String getEmail() {
+    public String getUsername() {
         return username;
     }
 
-    public void setEmail(String email) {
+    public void setUsername(String email) {
         this.username = email;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        roles.add(role);
     }
 
     public List<Role> getRoles() {
@@ -112,4 +113,5 @@ public class UserImpl implements UserDetails {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
 }

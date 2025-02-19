@@ -6,30 +6,17 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.1</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>3.4.2</version>
 	</parent>
 	<groupId>com.pwebii</groupId>
 	<artifactId>jpa-heranca</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jpa-heranca</name>
-	<description>Demo project for Spring Boot</description>
-	<url />
-	<licenses>
-		<license />
-	</licenses>
-	<developers>
-		<developer />
-	</developers>
-	<scm>
-		<connection />
-		<developerConnection />
-		<tag />
-		<url />
-	</scm>
+
 	<properties>
 		<java.version>23</java.version>
 	</properties>
+
 	<dependencies>
 
 		<dependency>

@@ -8,19 +8,19 @@
             <div class="form-group row mb-3">
                 <div class="col-md-1">
                     <label for="id">Sale Nº</label>
-                    <input class="form-control" type="text" th:field="*{sale.id}">
+                    <input class="form-control" type="text" th:field="*{order.id}">
                 </div>
                 <div class="col-md-5">
                     <label for="client">Client</label>
-                    <input class="form-control" type="text" th:field="*{sale.client.name}">
+                    <input class="form-control" type="text" th:field="*{order.client.name}">
                 </div>
                 <div class="col-md-3">
                     <label for="date">Date</label>
-                    <input class="form-control" type="text" th:field="*{sale.date}">
+                    <input class="form-control" type="text" th:field="*{order.date}">
                 </div>
             </div>
         </fieldset>
-        <h3>Products in this sale</h3>
+        <h3>Products in this order</h3>
         <table class="table table-borderless mt-4">
             <thead>
                 <tr class="table-dark">
@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="item : ${sale.items}">
+                <tr th:each="item : ${order.items}">
                     <td th:text="${item.product.id}"></td>
                     <td th:text="${item.product.description}"></td>
                     <td th:text="${#numbers.formatCurrency(item.product.price)}"></td>
@@ -42,9 +42,9 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-between mt-5">
-            <h4><strong>Total Value:</strong><span th:text="${#numbers.formatCurrency(sale.calculateTotal)}"></span></h4>
+            <h4><strong>Total Value:</strong><span th:text="${#numbers.formatCurrency(order.calculateTotal)}"></span></h4>
         </div>
-        <a th:href="@{/admin/sale}" class="btn btn-primary mt-5">Voltar</a>
+        <a th:href="@{/admin/order}" class="btn btn-primary mt-5">Voltar</a>
     </main>
 </body>
 

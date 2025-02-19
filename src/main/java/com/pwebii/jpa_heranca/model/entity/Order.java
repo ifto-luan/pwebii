@@ -18,11 +18,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Component
 @Scope("session")
-public class Sale implements Serializable {
+@Table(name="e_order")
+public class Order implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,20 +36,20 @@ public class Sale implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Person client;
+    private Client client;
 
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL , orphanRemoval = true)
-    private List<SaleItem> items = new ArrayList<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
 
-    public Sale() { }
+    public Order() { }
 
     public BigDecimal calculateTotal() {
-        return items.stream().map(SaleItem::total).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return items.stream().map(OrderItem::total).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public void addItem(Product p, double quantity) {
 
-        for (SaleItem item : items) {
+        for (OrderItem item : items) {
             
             if (item.getProduct().getId().equals(p.getId())) {
                 item.setQuantity(item.getQuantity() + quantity);
@@ -56,10 +58,10 @@ public class Sale implements Serializable {
             
         }
         
-        SaleItem item = new SaleItem();
+        OrderItem item = new OrderItem();
         item.setProduct(p);
         item.setQuantity(quantity);
-        item.setSale(this);
+        item.setOrder(this);
         this.items.add(item);
     }
     
@@ -69,7 +71,7 @@ public class Sale implements Serializable {
 
     public void removeItem(Long productId, double quantity) {
 
-        for (SaleItem item : items) {
+        for (OrderItem item : items) {
             
             if (item.getProduct().getId().equals(productId)) {
 
@@ -111,25 +113,25 @@ public class Sale implements Serializable {
         this.date = date;
     }
 
-    public List<SaleItem> getItems() {
+    public List<OrderItem> getItems() {
         return items;
     }
 
-    public void setItems(List<SaleItem> items) {
+    public void setItems(List<OrderItem> items) {
         this.items = items;
     }
 
-    public Person getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient(Person client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
     @Override
     public String toString() {
-        return "Sale [id=" + id + ", date=" + date + ", client=" + client + ", items=" + items + "]";
+        return "Order [id=" + id + ", date=" + date + ", client=" + client + ", items=" + items + "]";
     }
 
     

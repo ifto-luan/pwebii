@@ -10,9 +10,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class SaleItem implements Serializable {
+@Table(name="e_order_item")
+public class OrderItem implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -27,10 +29,10 @@ public class SaleItem implements Serializable {
     private Double quantity;
 
     @ManyToOne
-    @JoinColumn(name = "sale_id")
-    private Sale sale;
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    public SaleItem() {}
+    public OrderItem() {}
 
     public BigDecimal total() {
         return BigDecimal.valueOf(product.getPrice().doubleValue() * quantity);
@@ -64,17 +66,17 @@ public class SaleItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public Sale getSale() {
-        return sale;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setSale(Sale sale) {
-        this.sale = sale;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override
     public String toString() {
-        return "SaleItem [id=" + id + ", product=" + product + ", quantity=" + quantity + ", total=" + total() +"]";
+        return "OrderItem [id=" + id + ", product=" + product + ", quantity=" + quantity + ", total=" + total() +"]";
     }
 
     

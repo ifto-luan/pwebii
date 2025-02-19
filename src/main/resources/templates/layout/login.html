@@ -8,7 +8,7 @@
         <div class="text-center mb-4">
             <h2 class="fw-bold"><a style="text-decoration: none; color: inherit;" th:href="@{/home}">Book Store</a></h2>
         </div>
-        
+
         <div class="col-md-6 col-lg-4">
             <div th:if="${param.error}" class="alert alert-danger text-center">
                 Invalid username/password!
@@ -16,7 +16,10 @@
             <div th:if="${param.logout}" class="alert alert-info text-center">
                 Logout successful!
             </div>
-            
+            <div th:if="${successMessage}" class="alert alert-success text-center" id="successAlert">
+                <span th:text="${successMessage}"></span>
+            </div>
+
             <div class="card shadow-lg border-0 rounded-3">
                 <div class="card-header text-center bg-primary text-white p-3">
                     <h5>Welcome!</h5>
@@ -25,21 +28,38 @@
                     <form th:action="@{/login}" method="post">
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                            <input type="text" name="username" class="form-control" placeholder="Enter your username"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                            <input type="password" name="password" class="form-control"
+                                placeholder="Enter your password" required>
                         </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
-                    </form>
+                        <div class="d-flex mt-4 justify-content-between align-items-center">
+                            <a th:href="@{/signup}">Create an account</a>
+                            <a th:href="@{/forgot-password}">Forgot your password?</a>
+                        </div>
                 </div>
+                </form>
             </div>
         </div>
+        </div>
     </main>
-    
+
+    <script>
+        setTimeout(function () {
+            let alert = document.getElementById("successAlert");
+            if (alert) {
+                alert.classList.remove("show"); // Triggers Bootstrap fade-out
+                setTimeout(() => alert.remove(), 500); // Removes after fade-out
+            }
+        }, 3000); // Disappears after 3 seconds
+    </script>
+
     <footer th:replace="~{layout/footer :: footer}"></footer>
 </body>
 
