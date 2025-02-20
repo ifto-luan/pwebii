@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pwebii.jpa_heranca.model.entity.Order;
 import com.pwebii.jpa_heranca.model.entity.Product;
-// import com.pwebii.jpa_heranca.model.repository.ClientRepository;
 import com.pwebii.jpa_heranca.model.repository.OrderRepository;
 import com.pwebii.jpa_heranca.model.repository.ProductRepository;
+import com.pwebii.jpa_heranca.model.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -29,10 +30,12 @@ public class CartController {
 
     @Autowired
     private ProductRepository productRepository;
+
     @Autowired
     private OrderRepository orderRepository;
-    // @Autowired
-    // private ClientRepository clientRepository;
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Autowired
     private Order order;
@@ -70,13 +73,13 @@ public class CartController {
     }
 
     @GetMapping("/finish")
-    public ModelAndView finish(HttpSession session) {
+    public ModelAndView finish(HttpSession session, @AuthenticationPrincipal(expression = "username") String username) {
             
         order.setDate(LocalDate.now());
+        order.setClient(userRepo.findByUsername(username).getClient());
         orderRepository.save(order);
         session.setAttribute("order", new Order());
         return new ModelAndView("redirect:/success");
-
 
     }
 }

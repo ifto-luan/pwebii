@@ -38,7 +38,7 @@ public class SignUpController {
  
     @GetMapping
     public ModelAndView signup(UserClientDTO userClientDTO) {
-        return new ModelAndView("user/user");
+        return new ModelAndView("user/userRegistration");
     }
     
     @PostMapping("save")

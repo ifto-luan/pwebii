@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<body>
+    <main class="container flex-grow-1">
+        <h1 class="display-4">Your don't have any orders</h1>
+    <p class="lead">It seems you haven't finisehd  any orders yet.</p>
+    <a th:href="@{/home}" class="btn btn-primary btn-lg mt-3">Browse Products</a>
+    </main>
+</body>
+
+</html>
