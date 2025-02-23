@@ -19,6 +19,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Component
@@ -40,6 +42,16 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL , orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
+
+    @NotNull
+    @JoinColumn(name = "address_id")
+    @ManyToOne
+    private Address deliveryAddress;
+
+    @NotNull
+    @JoinColumn(name = "payment_method")
+    @ManyToOne
+    private PaymentMethod paymentMethod;
 
     public Order() { }
 
@@ -134,6 +146,20 @@ public class Order implements Serializable {
         return "Order [id=" + id + ", date=" + date + ", client=" + client + ", items=" + items + "]";
     }
 
-    
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }   
 
 }

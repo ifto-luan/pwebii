@@ -1,6 +1,11 @@
 package com.pwebii.jpa_heranca.controller;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,50 +24,60 @@ import com.pwebii.jpa_heranca.model.repository.UserRepository;
 
 import jakarta.validation.Valid;
 
-
 @Controller
 @RequestMapping("signup")
 public class SignUpController {
 
     @Autowired
     UserRepository userRepo;
-    
+
     @Autowired
     ClientRepository clientRepo;
-    
+
     @Autowired
     RoleRepository roleRepo;
 
     @Autowired
     PasswordEncoder passwordEncoder;
- 
+
     @GetMapping
-    public ModelAndView signup(UserClientDTO userClientDTO) {
-        return new ModelAndView("user/userRegistration");
+    public ModelAndView signup() {
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            ModelAndView mav = new ModelAndView("layout/signup");
+            mav.addObject("userClientDTO", new UserClientDTO()); 
+            return mav;
+        }
+
+        return new ModelAndView("redirect:/home");
+
     }
-    
+
     @PostMapping("save")
-    public ModelAndView save(@Valid UserClientDTO userClientDTO, RedirectAttributes redirectAttributes, BindingResult result) {
+    public ModelAndView save(@Valid UserClientDTO userClientDTO, BindingResult result,
+            RedirectAttributes redirectAttributes) {
 
-        if (result.hasErrors())
-            return signup(userClientDTO);
+        if (result.hasErrors()) {
 
-        UserImpl newUser = userClientDTO.getUser();
-        System.out.println(newUser);
+            ModelAndView mav = new ModelAndView("layout/signup");
+            mav.addObject("userClientDTO", userClientDTO);
+            mav.addObject("errors", result);
+            return mav;
+        }
 
-        Client savedClient = clientRepo.save(userClientDTO.getClient());
-        
+        UserImpl newUser = userClientDTO.toUser();
+        Client savedClient = clientRepo.save(userClientDTO.toClient());
+
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser.setClient(savedClient);
-        newUser.addRole(roleRepo.findByDescription("ROLE_USER"));
+        newUser.addRole(roleRepo.findByDescription("ROLE_USER").orElseThrow(() -> new NoSuchElementException("User role not found")));
         userRepo.save(newUser);
 
-        System.out.println(savedClient);
-        
-        redirectAttributes.addFlashAttribute("successMessage", "Registration successfull. Please login!");
-
+        redirectAttributes.addFlashAttribute("successMessage", "Registration successful. Please login!");
         return new ModelAndView("redirect:/login");
-
     }
 
 }

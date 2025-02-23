@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<body>
+    <main class="container flex-grow-1">
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+            <h3>Your addresses</h3>
+            <div>
+                <a type="button" class="btn btn-primary" th:href="@{/user/address/new}">
+                    New address
+                </a>
+                <a th:href="@{/home}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
+            </div>
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success text-center" id="successAlert">
+            <span th:text="${successMessage}"></span>
+        </div>
+        <table border="1" class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th>ZIP code</th>
+                    <th>Description</th>
+                    <th>Number</th>
+                    <th>City</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="address : ${addressList}">
+                    <td th:text="${address.zipCode}"></td>
+                    <td th:text="${address.description}"></td>
+                    <td th:text="${address.number}"></td>
+                    <td th:text="${address.city}"></td>
+                    <td th:text="${address.state}"></td>
+                    <td class="fs-3">
+                        <a class="btn btn-primary btn-sm" th:href="@{/user/address/{id}(id = ${address.id})}">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm" th:href="@{/user/address/delete/{id}(id = ${address.id})}">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
+            setTimeout(function () {
+                let alert = document.getElementById("successAlert");
+                if (alert) {
+                    alert.classList.remove("show"); // Triggers Bootstrap fade-out
+                    setTimeout(() => alert.remove(), 500); // Removes after fade-out
+                }
+            }, 3000); // Disappears after 3 seconds
+        </script>
+
+    </main>
+</body>
+
+</html>

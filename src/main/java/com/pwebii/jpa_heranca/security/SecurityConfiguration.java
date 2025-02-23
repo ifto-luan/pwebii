@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 .requestMatchers("/cart/finish").hasRole("USER")
+                                                .requestMatchers("/user/**").hasRole("USER")
                                                 .anyRequest().permitAll())
                                 .formLogin(form -> form
                                                 .loginPage("/login")

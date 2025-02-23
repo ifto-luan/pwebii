@@ -1,6 +1,7 @@
 package com.pwebii.jpa_heranca.model.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,6 @@ public interface ClientRepository extends JpaRepository <Client, Long> {
     @Query("SELECT c FROM Client c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Client> findAllContainingName(@Param("name") String name);
 
-    Client findByIdentifier(String identifier);
+    Optional<Client> findByIdentifier(String identifier);
 
 }

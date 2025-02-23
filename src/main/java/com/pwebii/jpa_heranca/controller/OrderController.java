@@ -35,7 +35,7 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ModelAndView getOrder(@PathVariable Long id, ModelMap model) {
-        model.addAttribute("order", repo.findById(id).orElseThrow(() -> new NoSuchElementException("Sell not found")));
+        model.addAttribute("order", repo.findById(id).orElseThrow(() -> new NoSuchElementException("Order not found")));
         return new ModelAndView("admin/order/order", model);
     }
 

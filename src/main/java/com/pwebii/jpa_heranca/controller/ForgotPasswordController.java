@@ -1,6 +1,12 @@
 package com.pwebii.jpa_heranca.controller;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +27,7 @@ public class ForgotPasswordController {
 
     @Autowired
     UserRepository userRepo;
-    
+
     @Autowired
     ClientRepository clientRepo;
 
@@ -31,45 +37,39 @@ public class ForgotPasswordController {
     @GetMapping
     public ModelAndView forgotPassword() {
 
-        return new ModelAndView("/user/forgot-password");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return new ModelAndView("/layout/forgot-password");
+        }
+
+        return new ModelAndView("redirect:/home");
 
     }
 
     @PostMapping
-    public ModelAndView changePassword(@RequestParam String identifier,@RequestParam String password, RedirectAttributes redirectAttributes) {
+    public ModelAndView changePassword(@RequestParam String identifier, @RequestParam String password,
+            RedirectAttributes redirectAttributes) {
 
-        Client c = clientRepo.findByIdentifier(identifier);
-        
-        if (c != null) {
-            
-            UserImpl u = userRepo.findByClient(c);
+        try {
 
-            if (u != null) {
-                
-                u.setPassword(passwordEncoder.encode(password));
-                userRepo.save(u);
-                redirectAttributes.addFlashAttribute("successMessage", "Password changed. Please login!");
-                return new ModelAndView("redirect:/login");
+            Client c = clientRepo.findByIdentifier(identifier)
+                    .orElseThrow(() -> new NoSuchElementException("There is no client with this CPF/CNPJ"));
 
-                
-            } else {
+            UserImpl u = userRepo.findByClient(c).orElseThrow(() -> new NoSuchElementException("There is no user associated with this CPF/CNPJ"));
 
-                redirectAttributes.addFlashAttribute("errorMessage", "There is no user related with this CPF/CNPJ");
-                return new ModelAndView("redirect:/forgot-password");
-                
-            }
-        
-            
-        } else {
-            
-            redirectAttributes.addFlashAttribute("errorMessage", "There is no user with this CPF/CNPJ");
+            u.setPassword(passwordEncoder.encode(password));
+            userRepo.save(u);
+            redirectAttributes.addFlashAttribute("successMessage", "Password changed. Please login!");
+            return new ModelAndView("redirect:/login");
+
+        } catch (NoSuchElementException e) {
+
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return new ModelAndView("redirect:/forgot-password");
 
         }
 
-
-
-
     }
-    
+
 }

@@ -8,10 +8,10 @@ import com.pwebii.jpa_heranca.model.entity.UserImpl;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class UserClientDTO {
+public class SingupUserClientDTO {
 
-    private Long clientId;
-    private Long userId;
+    private Long client_id;
+    private Long user_id;
 
     @NotBlank
     private String identifier;
@@ -22,26 +22,32 @@ public class UserClientDTO {
     @NotBlank
     private String type;
 
+    @NotBlank
+    private String username;
+
+    @NotBlank
+    private String password;
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public UserClientDTO() {
+    public SingupUserClientDTO() {
     }
 
-    public Long getClientId() {
-        return clientId;
+    public Long getClient_id() {
+        return client_id;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClient_id(Long client_id) {
+        this.client_id = client_id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
     public String getIdentifier() {
@@ -67,10 +73,29 @@ public class UserClientDTO {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserImpl toUser() {
 
         UserImpl u = new UserImpl();
-        u.setId(userId);
+        u.setId(user_id);
+        u.setUsername(username);
+        u.setPassword(password);
 
         return u;
 
@@ -79,7 +104,7 @@ public class UserClientDTO {
     public Client toClient() {
 
         Client c = new Client();
-        c.setId(clientId);
+        c.setId(client_id);
         c.setIdentifier(identifier);
         c.setName(name);
         c.setType(type);
@@ -88,14 +113,15 @@ public class UserClientDTO {
 
     }
 
-    public static UserClientDTO fromEntities(UserImpl u, Client c) {
+    public static SingupUserClientDTO fromEntities(UserImpl u, Client c) {
 
-        UserClientDTO dto = new UserClientDTO();
-        dto.clientId = c.getId();
+        SingupUserClientDTO dto = new SingupUserClientDTO();
+        dto.client_id = c.getId();
         dto.name = c.getName();
         dto.identifier = c.getIdentifier();
         dto.type = c.getType();
-        dto.userId = u.getId();
+        dto.username = u.getUsername();
+        dto.password = u.getPassword();
 
         return dto;
 

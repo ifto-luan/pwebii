@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/head :: head}"></head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
     <main class="container flex-grow-1">
-        <div class="mb-3 d-flex justify-content-between align-items-center">
-            <h2>User info</h2>
+        <div class="mb-3 d-flex justify-content-between align-items-center mt-5">
+            <h2>User registration</h2>
             <a th:href="@{/home}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
         </div>
         <div th:if="${successMessage}" class="alert alert-success text-center" id="successAlert">
             <span th:text="${successMessage}"></span>
         </div>
-        <form th:action="@{/user/save}" th:object="${userClientDTO}" method="post">
+        <form th:action="@{/signup/save}" th:object="${userClientDTO}" method="post">
             <div class="row">
 
-                <input type="hidden" th:field="*{clientId}">
-                <input type="hidden" th:field="*{userId}">
+                <input type="hidden" th:field="*{client_id}">
+                <input type="hidden" th:field="*{user_id}">
 
                 <div class="col-md-3">
                     <label for="clientType">Client Type</label>
@@ -26,18 +28,30 @@
 
                 <div class="col-md-5">
                     <label id="nameLabel" for="name">Name</label>
-                    <input class="form-control" type="text" th:field="*{name}" th:errorclass="is-invalid" required>
+                    <input class="form-control" type="text" th:field="*{name}" th:errorclass="is-invalid">
                     <label class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
                 </div>
                 <div class="col-md-3">
                     <label id="identifierLabel" for="identifier">CPF</label>
                     <input class="form-control" type="text" th:field="*{identifier}" th:errorclass="is-invalid"
-                        required>
+                       >
                     <label class="invalid-feedback" th:if="${#fields.hasErrors('identifier')}"
                         th:errors="*{identifier}"></label>
                 </div>
-                <div class="col-md-3">
-                    <a th:href="@{/user/change-password}" class="btn btn-secondary mt-3">Change your password</a>
+                <div class="col-md-5 mt-3">
+                    <div>
+                        <label for="name">Username</label>
+                        <input class="form-control" type="text" th:field="*{username}" th:errorclass="is-invalid"
+                           >
+                        <label class="invalid-feedback" th:if="${#fields.hasErrors('username')}"
+                            th:errors="*{username}"></label>
+                    </div>
+                    <div class="mt-3">
+                        <label for="name">Password</label>
+                        <input class="form-control" type="password" th:field="*{password}" th:errorclass="is-invalid">
+                        <label class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                            th:errors="*{password}"></label>
+                    </div>
                 </div>
             </div>
             <input type="submit" value="Save changes" class="btn btn-primary mt-3">
@@ -51,6 +65,7 @@
             }
             document.addEventListener("DOMContentLoaded", updateLabel);
         </script>
+
         <script>
             setTimeout(function () {
                 let alert = document.getElementById("successAlert");
@@ -62,6 +77,7 @@
         </script>
 
     </main>
+    <footer th:replace="~{layout/footer :: footer}"></footer>
 </body>
 
 </html>
