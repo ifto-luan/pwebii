@@ -1,10 +1,16 @@
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary mb-3" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="/">
+            <a sec:authorize="!hasRole('ROLE_ADMIN')" class="navbar-brand d-flex align-items-center" href="/">
                 <img th:src="@{/img/favicon.ico}" alt="Logo" width="40" height="40"
                     class="d-inline-block align-text-top me-2">
                 <span class="fs-3">Book Store</span>
+            </a>
+
+            <a sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')" class="navbar-brand d-flex align-items-center" th:href="@{/admin}">
+                <img th:src="@{/img/favicon.ico}" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-text-top me-2">
+                <span class="fs-3">Book Store<small>{admin}</small></span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

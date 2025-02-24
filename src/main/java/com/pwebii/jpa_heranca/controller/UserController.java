@@ -111,7 +111,7 @@ public class UserController {
 
             ModelAndView mav = new ModelAndView("user/user");
             mav.addObject("userClientDTO", userClientDTO);
-            mav.addObject("errors", result);
+            mav.addObject("org.springframework.validation.BindingResult.userClientDTO", result);
             return mav;
 
         }

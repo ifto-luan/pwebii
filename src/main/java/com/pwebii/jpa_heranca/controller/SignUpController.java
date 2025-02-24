@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pwebii.jpa_heranca.model.dto.UserClientDTO;
+import com.pwebii.jpa_heranca.model.dto.SignupUserClientDTO;
 import com.pwebii.jpa_heranca.model.entity.Client;
 import com.pwebii.jpa_heranca.model.entity.UserImpl;
 import com.pwebii.jpa_heranca.model.repository.ClientRepository;
@@ -43,12 +43,11 @@ public class SignUpController {
     @GetMapping
     public ModelAndView signup() {
 
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             ModelAndView mav = new ModelAndView("layout/signup");
-            mav.addObject("userClientDTO", new UserClientDTO()); 
+            mav.addObject("userClientDTO", new SignupUserClientDTO()); 
             return mav;
         }
 
@@ -57,19 +56,22 @@ public class SignUpController {
     }
 
     @PostMapping("save")
-    public ModelAndView save(@Valid UserClientDTO userClientDTO, BindingResult result,
+    public ModelAndView save(@Valid SignupUserClientDTO userClientDTO, BindingResult result,
             RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
 
             ModelAndView mav = new ModelAndView("layout/signup");
             mav.addObject("userClientDTO", userClientDTO);
-            mav.addObject("errors", result);
+            mav.addObject("org.springframework.validation.BindingResult.userClientDTO", result);
+            System.out.println(result.toString());
             return mav;
         }
 
         UserImpl newUser = userClientDTO.toUser();
         Client savedClient = clientRepo.save(userClientDTO.toClient());
+
+        System.out.println(newUser.getPassword());
 
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser.setClient(savedClient);
