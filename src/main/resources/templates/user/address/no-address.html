@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<body>
+    <main class="container flex-grow-1">
+        <h1 class="display-4">Your don't have any addresses</h1>
+    <p class="lead">It seems you haven't finisehd any addresses yet.</p>
+    <a th:href="@{/user/address/new}" class="btn btn-primary btn-lg mt-3">Add a new address</a>
+    </main>
+</body>
+
+</html>

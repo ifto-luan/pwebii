@@ -32,3 +32,8 @@ replay_pid*
 /.vscode/
 /target/
 /build/
+
+mvnw
+mvnw.cmd
+
+/.mvn

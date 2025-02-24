@@ -1,0 +1,90 @@
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary mb-3" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a sec:authorize="!hasRole('ROLE_ADMIN')" class="navbar-brand d-flex align-items-center" href="/">
+                <img th:src="@{/img/favicon.ico}" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-text-top me-2">
+                <span class="fs-3">Book Store</span>
+            </a>
+
+            <a sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')" class="navbar-brand d-flex align-items-center" th:href="@{/admin}">
+                <img th:src="@{/img/favicon.ico}" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-text-top me-2">
+                <span class="fs-3">Book Store<small>{admin}</small></span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/admin/client}">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/admin/product}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/admin/order}">Orders</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
+
+                    <li class="nav-item dropdown me-3" sec:authorize="isAuthenticated() && !hasRole('ROLE_ADMIN')">
+                        <a class="nav-link dropdown-toggle text-light d-flex align-items-center p-3" href="#"
+                            id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <p class="m-0">Hello, <span sec:authentication="name"></span></p>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item"
+                                    th:href="@{/user}">See
+                                    User Settings</a></li>
+                            <li><a class="dropdown-item"
+                                    th:href="@{/user/orders}">See
+                                    Orders</a></li>
+                            <li>
+                            <li><a class="dropdown-item"
+                                    th:href="@{/user/address}">Addresses</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form th:action="@{/logout}" method="post">
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-danger" th:href="@{/logout}"><i class="bi bi-box-arrow-left"></i></button>
+                        </form>
+                    </li>
+
+
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-success me-2" th:href="@{/login}">Login</a>
+                        <a class="btn btn-info" th:href="@{/signup}">Register</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="!hasRole('ROLE_ADMIN')">
+                        <a class="btn btn-outline-light position-relative" th:href="@{/cart}">
+                            <i class="bi bi-cart-fill"></i>
+                            <span
+                                class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
+                                th:if="${session.order != null && session.order.items.size() > 0}"
+                                th:text="${session.order.items.size()}">
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

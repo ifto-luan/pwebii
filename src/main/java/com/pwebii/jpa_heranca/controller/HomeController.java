@@ -25,7 +25,7 @@ public class HomeController {
     public ModelAndView getMethodName(ModelMap model) {
 
         model.addAttribute("products", repo.findAll());
-        return new ModelAndView("user/home");
+        return new ModelAndView("layout/home");
     
     }
     
@@ -53,7 +53,7 @@ public class HomeController {
 
         model.addAttribute("products", products);
         model.addAttribute("searchTerm", description);
-        return new ModelAndView("user/home");
+        return new ModelAndView("layout/home");
 
     }
 

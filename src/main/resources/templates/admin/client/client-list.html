@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<body>
+    <main class="container flex-grow-1">
+
+        <div th:if="${successMessage}" class="alert alert-success position-fixed top-5 end-0 m-3 fade show" role="alert"
+            id="successAlert">
+            <span th:text="${successMessage}"></span>
+        </div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger position-fixed top-5 end-0 m-3 fade show" role="alert"
+            id="successAlert">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+
+        <form th:action="@{/admin/client/search}" method="get" class="row">
+            <div class="col input-group mb-3">
+                <input class="form-control" type="text" th:value="${searchName}" name="name"
+                    placeholder="Enter the client name" />
+                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
+            </div>
+            <div class="col">
+                <a type="button" class="btn btn-primary" th:href="@{/admin/client/new}">
+                    New Client
+                </a>
+            </div>
+        </form>
+
+        <table border="1" class="table table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>CPF/CNPJ</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="client : ${clients}">
+                    <td th:text="${client.id}"></td>
+                    <td th:text="${client.name}"></td>
+                    <td th:text="${client.type}"></td>
+                    <td th:text="${client.identifier}"></td>
+                    <td class="fs-3"><a class="btn btn-primary btn-sm"
+                            th:href="@{/admin/client/{id}(id = ${client.id})}"><i class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-primary btn-sm" th:href="@{/admin/client/delete/{id}(id = ${client.id})}"><i
+                                class="bi bi-trash-fill"></i></a>
+                        <a class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-title="List all client orders"
+                            th:href="
+                            @{/admin/client/client_orders/{id}(id=${client.id})}"><i class="bi bi-list-task"></i></a>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
+            setTimeout(function () {
+                let alert = document.getElementById("successAlert");
+                if (alert) {
+                    alert.classList.remove("show"); // Triggers Bootstrap fade-out
+                    setTimeout(() => alert.remove(), 500); // Removes after fade-out
+                }
+            }, 3000); // Disappears after 3 seconds
+        </script>
+
+    </main>
+</body>
+
+</html>

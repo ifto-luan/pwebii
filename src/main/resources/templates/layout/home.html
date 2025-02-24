@@ -3,23 +3,18 @@
 
 <body>
     <main class="container flex-grow-1">
-        <form th:action="@{/admin/product/search}" method="get" class="row" >
+        <form th:action="@{/home/search}" method="get" class="row" >
             <div class="col input-group mb-3">
                 <input class="form-control" type="text" th:value="${searchTerm}" name="description"
                     placeholder="Enter product description" />
                 <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
-            </div>
-            <div class="col">
-                <a class="btn btn-primary" th:href="@{/admin/product/new}">
-                    New Product
-                </a>
             </div>
         </form>
 
         <table border="1" class="table table-hover table-borderless">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Description</th>
                     <th>Price</th>
                     <th></th>
@@ -27,14 +22,12 @@
             </thead>
             <tbody>
                 <tr th:each="product : ${products}">
-                    <td th:text="${product.id}"></td>
+                    <!-- <td th:text="${product.id}"></td> -->
                     <td th:text="${product.description}"></td>
                     <td th:text="'$'+${product.price}"></td>
                     <td class="d-flex justify-content-end">
-                        <a class="btn btn-primary btn-sm m-1" th:href="@{/admin/product/{id}(id = ${product.id})}"><i
-                            class="bi bi-pencil-square"></i></a>
-                    <a class="btn btn-primary btn-sm m-1" th:href="@{/admin/product/delete/{id}(id = ${product.id})}"><i
-                            class="bi bi-trash-fill"></i></a>
+                        <a th:href="@{/cart/add/{id}(id = ${product.id})}" class="btn btn-primary btn-sm"><i
+                                class="bi bi-cart-plus-fill"></i></a>
                     </td>
                 </tr>
             </tbody>

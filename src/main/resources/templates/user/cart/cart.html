@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout/user/user-base-layout :: user-base-layout(~{::main})}">
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
     <main class="container flex-grow-1">
-        <h2 style="font-weight: bold;">Your cart</h2>
+        <h2 class="fw-bold">Your cart</h2>
         <hr>
         <table class="table table-borderless">
             <thead>
@@ -16,36 +16,52 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="item : ${session.sale.items}">
+                <tr th:each="item : ${session.order.items}">
                     <td th:text="${item.product.description}"></td>
                     <td th:text="${item.product.price}"></td>
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.total()}"></td>
                     <td>
-                        <div class="d-grid gap-4 d-md-flex justify-content-md-end">
-                            <a th:href="@{/cart/add/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i></a>
-                            <a th:href="@{/cart/remove/{id}(id = ${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-dash"></i></a>
-                            <a onclick="return window.confirm('Are you shure about deleting this item?')" th:href="@{/cart/delete/{id}(id = ${item.product.id})}" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></a>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a th:href="@{/cart/add/{id}(id=${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i></a>
+                            <a th:href="@{/cart/remove/{id}(id=${item.product.id})}" class="btn btn-primary btn-sm"><i class="bi bi-dash"></i></a>
+                            <a onclick="return window.confirm('Are you sure about deleting this item?')" th:href="@{/cart/delete/{id}(id=${item.product.id})}" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
         <br>
-        <div class="d-flex justify-content-between">
-            <h3><strong>Total Value:</strong> $<span th:text="${session.sale.calculateTotal}"></span></h3>
-            <div>
-                <a onclick="return window.confirm('Are you shure about cleaning this cart?')"  th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/clear}" class="btn btn-secondary mx-3">Clear
-                    cart</a>
-                <a th:if="${!session.sale.items.isEmpty}" th:href="@{/cart/finish}" class="btn btn-success">Finish
-                    sale</a>
+
+        <form th:action="@{cart/finish}" method="post">
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="address" class="form-label"><strong>Delivery Address:</strong></label>
+                    <select id="address" class="form-select" name="addressId" required>
+                        <option th:each="addr : ${addressList}" th:value="${addr.id}" th:text="${addr.toString()}"></option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="paymentMethod" class="form-label"><strong>Payment Method:</strong></label>
+                    <select id="paymentMethod" class="form-select" name="paymentMethodId" required>
+                        <option th:each="pay : ${paymentMethods}" th:value="${pay.id}" th:text="${pay.Description}">Credit Card</option>
+                    </select>
+                </div>
             </div>
-        </div>
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <h3><strong>Total Value:</strong> $<span th:text="${session.order.calculateTotal}"></span></h3>
+                <div>
+                    <a onclick="return window.confirm('Are you sure about clearing this cart?')" th:if="${!session.order.items.isEmpty}" th:href="@{/cart/clear}" class="btn btn-secondary mx-3">Clear Cart</a>
+                    <button type="submit" th:if="${!session.order.items.isEmpty}" class="btn btn-success">Finish Order</a>
+                </div>
+            </div>
+        </form>
         <hr>
-        <div class="container">
+        <div class="text-center">
             <a th:href="@{/home}" class="btn btn-primary">Back to Product List</a>
         </div>
     </main>
 </body>
-
 </html>

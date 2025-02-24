@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
+
+<body>
+    <main class="container flex-grow-1">
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+            <h2>Address registration</h2>
+            <a th:href="@{/user/address}" class="btn btn-primary"><i class="bi bi-arrow-left"></i></a>
+        </div>
+        <form th:action="@{/user/address/save}" th:object="${address}" method="post">
+            <div class="row">
+                <input type="hidden" th:field="*{id}">
+                <div class="col-md-5">
+                    <label for="zipCode">ZIP Code</label>
+                    <input class="form-control" type="text" th:field="*{zipCode}" th:errorclass="is-invalid">
+                    <label class="invalid-feedback" th:if="${#fields.hasErrors('zipCode')}"
+                        th:errors="*{zipCode}"></label>
+                </div>
+                <div class="col-md-5">
+                    <label for="description">Description</label>
+                    <input class="form-control" type="text" th:field="*{description}" th:errorclass="is-invalid">
+                    <label class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
+                        th:errors="*{description}"></label>
+                </div>
+                <div class="col-md-5">
+                    <label for="number">Number</label>
+                    <input class="form-control" type="text" th:field="*{number}" th:errorclass="is-invalid">
+                    <label class="invalid-feedback" th:if="${#fields.hasErrors('number')}"
+                        th:errors="*{number}"></label>
+                </div>
+                <div class="col-md-5">
+                    <label for="state">State</label>
+                    <input class="form-control" type="text" th:field="*{state}" th:errorclass="is-invalid">
+                    <label class="invalid-feedback" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></label>
+                </div>
+                <div class="col-md-3">
+                    <label id="city" for="identifier">City</label>
+                    <input class="form-control" type="text" th:field="*{city}" th:errorclass="is-invalid">
+                    <label class="invalid-feedback" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></label>
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary mt-3">
+        </form>
+
+    </main>
+</body>
+
+</html>

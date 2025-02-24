@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout/admin/admin-base-layout :: admin-base-layout(~{::main})}">
+<html lang="en" th:replace="~{layout/base-layout :: base-layout(~{::main})}">
 
 <body>
     <main class="container flex-grow-1">
@@ -9,7 +9,7 @@
                 <div class="row justify-content-center">
                     <!-- User Management -->
                     <div class="col-md-3">
-                        <a href="/admin/person" class="btn btn-primary btn-block w-100 py-3">
+                        <a href="/admin/client" class="btn btn-primary btn-block w-100 py-3">
                             Manage Clients
                         </a>
                     </div>
@@ -21,8 +21,8 @@
                     </div>
                     <!-- Sales Management -->
                     <div class="col-md-3">
-                        <a href="/admin/sale" class="btn btn-warning btn-block w-100 py-3">
-                            Manage Sales
+                        <a href="/admin/order" class="btn btn-warning btn-block w-100 py-3">
+                            Manage Orders
                         </a>
                     </div>
                 </div>
